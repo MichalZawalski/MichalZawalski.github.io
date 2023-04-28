@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Welcome to my homepage">
+    <meta name="author" content="Michał Zawalski">
+    <title>Michał Zawalski</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
+    <!-- Bootstrap + JohnDoe main styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    
+    <header class="header">
+        <div class="container">
+            <ul class="social-icons pt-3">
+                <li class="social-item"><a class="social-link text-light" href="https://www.facebook.com/profile.php?id=100001126056346"><i class="ti-facebook" aria-hidden="true"></i></a></li>
+                <li class="social-item"><a class="social-link text-light" href="https://twitter.com/MiZawalski"><i class="ti-twitter" aria-hidden="true"></i></a></li>
+                <li class="social-item"><a class="social-link text-light" href="https://www.linkedin.com/in/michal-zawalski/"><i class="ti-linkedin" aria-hidden="true"></i></a></li>
+                <li class="social-item"><a class="social-link text-light" href="https://scholar.google.com/citations?user=ljbCuVkAAAAJ&hl=pl"><i class="ti-google" aria-hidden="true"></i></a></li>
+            </ul>  
+            <div class="header-content">
+                <h4 class="header-subtitle" >Hello, I am</h4>
+                <h1 class="header-title">Michał Zawalski</h1>
+                <h6 class="header-mono" >RL Researcher</h6>
+                <a class="btn btn-primary btn-rounded" href="assets/other/cv_michal_zawalski.pdf"><i class="ti-file pr-2"></i> Read my CV </a>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" data-spy="affix" data-offset-top="510">
+        <div class="container">
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse mt-sm-20 navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#research" class="nav-link">Research</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav brand">
+<!--                     <img src="assets/imgs/avatar.jpg" alt="" class="brand-img"> -->
+                    <li class="brand-txt">
+                        <h5 class="brand-title">Michał Zawalski</h5>
+                        <div class="brand-subtitle">RL Researcher</div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="#experience" class="nav-link">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#competitions" class="nav-link">Competitions</a>
+                    </li>
+                    <li class="nav-item last-item">
+                        <a href="#interests" class="nav-link">Interests</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section" id="about">
+        <div class="container">
+            <div class="row">
+                 <div class="col-md-6 col-lg-4">
+                     <img src="assets/imgs/myself.jpg" class="img-fluid" alt="My selfie">
+                 </div>
+                 <div class="col-md-6 col-lg-8">
+                     <h2 class="mb-5"><span class="text-danger">Who</span> am I?</h2>
+                     <p>I am a perfectly normal PhD student.</p>
+                     <p>I do my best to live just like any normal human should.</p>
+                     <p>I eat breakfast, drink some liquids and yawn from time to time. All people do that, therefore you see that I am an ordinary person.</p>
+                 </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" id="research">
+        <div class="container">
+            <h2 class="mb-5"><span class="text-danger">My</span> Research</h2>
+            <p>My research interests are mostly connected with Reinforcement Learning, especially planning algorithms, variations of DQN, and environments with discrete observations.
+            I appreciate simple tricks that offer huge advantages, such as Hindsight Experience Replay or network resets to aviod primacy bias.
+            In contrast, I don't like bootstrapping, despite it is often a reasonable choice.</p>
+            <p>I believe that to solve really hard problems agents need to use planning for choosing actions, and the planning is much more efficient when using subgoals insead of low-level actions.</p>
+            <p>Apart from RL, I am also interested in NLP, even before it became mainstream.
+            I used to work as NLP researcher in a few companies.
+            Sometimes I dream about learning a Q-function that is text-based, with prompt-based Bellman updates.</p>
+            <p>Below you can find my recent papers.</p>
+            <br>
+            <div class="row">
+            
+                <div class="blog-card">
+                    <div class="img-holder">
+                        <img src="assets/imgs/adasubs_thumbnail.png" alt="Adaptive Subgoal Search thumbnail">
+                    </div>
+                    <div class="content-holder">
+                        <h6 class="title">Fast and Precise: Adjusting Planning Horizon with Adaptive Subgoal Search</h6>
+
+                        <p class="post-details">
+                            <b>Michał Zawalski</b>, Michał Tyrolski, Konrad Czechowski, Damian Stachura, Piotr Piękos, Tomasz Odrzygóźdź, Yuhuai Wu, Łukasz Kuciński, Piotr Miłoś<br>
+                            <b><em style="font-size: 150%; font-style: normal;">ICLR 2023, notable-top-5%</em></b>
+                        </p>
+                        
+                        <p>We propose a novel subgoal-based planning algorithm Adaptive Subgoal Search.
+                        It adaptively chooses from subgoals with different horizons.
+                        Our method benefits both from the efficiency of planning with longer-term subgoals and from the reliability of shorter-term ones.
+                        We show that this approach not only works well in hard problems, but also generalizes to out-of-distribution instances.</p>
+
+                        <a href="https://arxiv.org/abs/2206.00702" class="btn btn-primary w-lg" style="margin-right: 1em">Read Paper</a>
+                        <a href="https://sites.google.com/view/adaptivesubgoalsearch/" class="btn btn-primary w-lg" style="margin-right: 1em">Project website</a>
+                    </div>
+                </div>
+            
+                <div class="blog-card">
+                    <div class="img-holder">
+                        <img src="assets/imgs/subgoalsearch_thumbnail.png" alt="Subgoal Search thumbnail">
+                    </div>
+                    <div class="content-holder">
+                        <h6 class="title">Subgoal Search For Complex Reasoning Tasks</h6>
+
+                        <p class="post-details">
+                            Konrad Czechowski, Tomasz Odrzygóźdź, Marek Zbysiński, <b>Michał Zawalski</b>, Krzysztof Olejnik, Yuhuai Wu, Łukasz Kuciński, Piotr Miłoś<br>
+                            <b><em style="font-size: 150%; font-style: normal;">NeurIPS 2021</em></b>
+                        </p>
+                        
+                        <p>We propose an algorithm for efficient planning in complex tasks.
+                        Instead of searching the space by taking atomic actions, we propose to use high-level subgoals for a faster and deeper search.
+                        Our method shows strong results in complex reasoning environments: Sokoban, the Rubik's Cube, and INT (proving inequalities).</p>
+
+                        <a href="https://arxiv.org/abs/2108.11204" class="btn btn-primary w-lg" style="margin-right: 1em">Read Paper</a>
+                    </div>
+                </div>
+            
+                <div class="blog-card">
+                    <div class="img-holder">
+                        <img src="assets/imgs/matrace_thumbnail.png" alt="MA-Trace thumbnail">
+                    </div>
+                    <div class="content-holder">
+                        <h6 class="title">Off-Policy Correction for Multi-Agent Reinforcement Learning</h6>
+
+                        <p class="post-details">
+                            <b>Michał Zawalski</b>, Błażej Osiński, Henryk Michalewski, Piotr Miłoś<br>
+                            <b><em style="font-size: 150%; font-style: normal;">AAMAS 2022</em></b>
+                        </p>
+                        
+                        <p>We propose a simple yet effective algorithm for multi-agent reinforcement learning, based on V-Trace.
+                        Despite its on-policy nature, the computations can be distributed to many workers with nearly perfect speedup and a negligible impact on the quality of training.</p>
+
+                        <a href="https://arxiv.org/abs/2111.11229" class="btn btn-primary w-lg" style="margin-right: 1em">Read Paper</a>
+                        <a href="https://www.ifaamas.org/Proceedings/aamas2022/pdfs/p1774.pdf" class="btn btn-primary w-lg" style="margin-right: 1em">Extended abstract</a>
+                        <a href="https://sites.google.com/view/ma-trace/main-page" class="btn btn-primary w-lg" style="margin-right: 1em">Project website</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+    <section class="section bg-dark py-5">
+        <div class="container text-center">
+            <h2 class="text-light mb-5 font-weight-normal">Read my complete CV</h2>
+            <a class="btn btn-primary w-lg text-light" href="assets/other/cv_michal_zawalski.pdf">Download</a>
+        </div>
+    </section>
+
+    <section class="section" id="experience">
+        <div class="container">
+            <h2 class="mb-5"><span class="text-danger">My</span> Experience</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                       <div class="card-header">
+                            <div class="mt-2">
+                                <h4>Work</h4>
+                                <span class="line"></span>  
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="title text-danger">2022, June - September</h6>
+                            <P><b>G-Research</b>, Research Internship</P>
+                            <P class="subtitle">I verified the performance of speech recognition models on financial audio data. I built a pipeline for evaluating and fine-tuning transformer-based models for speech recognition and audio classification.</P>
+                            <hr>
+                            <h6 class="title text-danger">2019, July - September</h6>
+                            <P><b>Google Zurich</b>, Software Developer Internship</P>
+                            <P class="subtitle">During this internship, I worked in the Shopping Ads Data Quality team. I was responsible for estimating the impact of new enforcement that filters images violating the standards.</P>
+                            <hr>
+                            <h6 class="title text-danger">2017, July - October</h6>
+                            <P><b>Samsung</b>, Research Internship</P>
+                            <P class="subtitle">I worked in the Advanced Natural Language Processing team. The main area of my research was efficient handwriting recognition.</P>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                       <div class="card-header">
+                            <div class="mt-2">
+                                <h4>Education</h4>
+                                <span class="line"></span>  
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="title text-danger">2020 - Present</h6>
+                            <P><b>PhD</b> in Artificial Intelligence<br>
+                            University of Warsaw</P>
+                            <hr>
+                            <h6 class="title text-danger">2018 - 2020</h6>
+                            <P><b>MS</b> in Computer Science<br>
+                            University of Warsaw</P>
+                            <hr>
+                            <h6 class="title text-danger">2015 - 2018</h6>
+                            <!--<P>Double Degree Program in Computer Science and Mathematics (BS)<br>
+                            University of Warsaw</P>-->
+                            <P><b>BS</b> in Computer Science, <b>BS</b> in Mathematics<br>
+                            University of Warsaw</P>
+                            <hr>
+                            <h6 class="title text-danger">2012 - 2015</h6>
+                            <P>High School Degree<br>
+                            XIV LO im. S. Staszica</P>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                       <div class="card-header">
+                            <div class="mt-2">
+                                <h4>Teaching</h4>
+                                <span class="line"></span>  
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="title text-danger">Oct 2022 - Feb 2023</h6>
+                            <P>Algorithms and data structures classes,<br>
+                            University of Warsaw</P>
+                            <hr>
+                            <h6 class="title text-danger">Oct 2021 - Feb 2022</h6>
+                            <P>Algorithms and data structures classes,<br>
+                            University of Warsaw</P>
+                            <hr>
+                            <h6 class="title text-danger">Mar 2021 - Jun 2021</h6>
+                            <P>Individual programming project classes,<br>
+                            University of Warsaw</P>
+                            <hr>
+                            <h6 class="title text-danger">August 2016</h6>
+                            <P>Preparing algorithmic contests and workshops on introduction to algorithms,<br>
+                            XIV LO im. S. Staszica</P>
+                            <hr>
+                            <h6 class="title text-danger">Sep 2015 - Jun 2016</h6>
+                            <P>Extracurricular algorithmic classes,<br>
+                            XIV LO im. S. Staszica</P>
+                            <hr>
+                            <h6 class="title text-danger">August 2015</h6>
+                            <P>Preparing algorithmic contests,<br>
+                            XIV LO im. S. Staszica</P>
+                            <hr>
+                            <h6 class="title text-danger">Sep 2014 - Jun 2015</h6>
+                            <P>Extracurricular algorithmic classes,<br>
+                            XIV LO im. S. Staszica</P>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!--<section class="section bg-dark text-center">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-6 col-lg-3">
+                    <div class="row ">
+                        <div class="col-5 text-right text-light border-right py-3">
+                            <div class="m-auto"><i class="ti-alarm-clock icon-xl"></i></div>
+                        </div>
+                        <div class="col-7 text-left py-3">
+                            <h1 class="text-danger font-weight-bold font40">500</h1>
+                            <p class="text-light mb-1">Hours Worked</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="row">
+                        <div class="col-5 text-right text-light border-right py-3">
+                            <div class="m-auto"><i class="ti-layers-alt icon-xl"></i></div>
+                        </div>
+                        <div class="col-7 text-left py-3">
+                            <h1 class="text-danger font-weight-bold font40">50K</h1>
+                            <p class="text-light mb-1">Project Finished</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="row">
+                        <div class="col-5 text-right text-light border-right py-3">
+                            <div class="m-auto"><i class="ti-face-smile icon-xl"></i></div>
+                        </div>
+                        <div class="col-7 text-left py-3">
+                            <h1 class="text-danger font-weight-bold font40">200K</h1>
+                            <p class="text-light mb-1">Happy Clients</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="row">
+                        <div class="col-5 text-right text-light border-right py-3">
+                            <div class="m-auto"><i class="ti-heart-broken icon-xl"></i></div>
+                        </div>
+                        <div class="col-7 text-left py-3">
+                            <h1 class="text-danger font-weight-bold font40">2k</h1>
+                            <p class="text-light mb-1">Coffee Drinked</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+    
+    <section class="section bg-dark py-5">
+        <div class="container text-center">
+            <h2 class="text-light mb-5 font-weight-normal">Read my complete CV</h2>
+            <a class="btn btn-primary w-lg text-light" href="assets/other/cv_michal_zawalski.pdf">Download</a>
+        </div>
+    </section>
+
+    <section class="section" id="competitions">
+        <div class="container">
+            <h2 class="mb-5 pb-4"><span class="text-danger">Competition</span> Awards</h2>
+            <div class="row">
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Google Hashcode, 2020</h5>
+                            <P class="award-subtitle">Finalist, <span class="text-danger">17th</span> place (team of 4)</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">XII Microsoft Bubble Cup, 2019</h5>
+                            <p class="award-subtitle">Finalist, <span class="text-danger">13th</span> place (team of 3)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">XI Microsoft Bubble Cup, 2018</h5>
+                            <P class="award-subtitle">Finalist, <span class="text-danger">2nd</span> place (team of 3)</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header ">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Potyczki Algorytmiczne, 2018</h5>
+                            <P class="award-subtitle">Finalist, <span class="text-danger">13th</span> place</P>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header ">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Central Europe Regional Contest, 2017</h5>
+                            <P class="award-subtitle"><span class="text-danger">8th</span> place (team of 3)</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header ">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Google Hashcode, 2017</h5>
+                            <P class="award-subtitle">Finalist, <span class="text-danger">22nd</span> place (team of 4)</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Polish Academic Championships in Team Programming, 2017</h5>
+                            <P class="award-subtitle"><span class="text-danger">10th</span> place (team of 3)</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Potyczki Algorytmiczne, 2017</h5>
+                            <P class="award-subtitle">Finalist, <span class="text-danger">15th</span> place</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Polish Academic Championships in Team Programming, 2016</h5>
+                            <P class="award-subtitle"><span class="text-danger">12th</span> place (team of 3)</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Polish Academic Championships in Team Programming, 2015</h5>
+                            <P class="award-subtitle"><span class="text-danger">20th</span> place (team of 3)</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">XXII Polish Olympiad in Informatics, 2015</h5>
+                            <P class="award-subtitle">Laureate, <span class="text-danger">6th</span> place</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">LXV Polish Mathematical Olympiad, 2015</h5>
+                            <P class="award-subtitle">Laureate, <span class="text-danger">12th</span> place</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">XXI Polish Olympiad in Informatics, 2014</h5>
+                            <P class="award-subtitle">Laureate, <span class="text-danger">19th</span> place</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">LXV Polish Mathematical Olympiad, 2014</h5>
+                            <P class="award-subtitle">Laureate, <span class="text-danger">25th</span> place</P>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!--<section class="section bg-dark py-5">
+        <div class="container text-center">
+            <h2 class="text-light mb-5 font-weight-normal">Read my complete CV</h2>
+            <a class="btn btn-primary w-lg text-light" >Download</a>
+        </div>
+    </section>-->
+    
+    <!--<section class="section bg-custom-gray" id="interests">
+        <div class="container">
+            <h1 class="mb-5"><span class="text-danger">My</span> Interests</h1>
+            <div class="portfolio">
+                <div class="filters">
+                    <a href="#" data-filter=".new" class="active">
+                        New
+                    </a>
+                    <a href="#" data-filter=".advertising">
+                        Advertising
+                    </a>
+                    <a href="#" data-filter=".branding">
+                        Branding
+                    </a>
+                    <a href="#" data-filter=".web">
+                        Web
+                    </a>
+                </div>
+                <div class="portfolio-container"> 
+                    <div class="col-md-6 col-lg-4 web new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/web-1.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/web-1.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">WEB</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>   
+                        </div>             
+                    </div>
+                    <div class="col-md-6 col-lg-4 web new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/web-2.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/web-2.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">WEB</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div> 
+                        </div>                         
+                    </div>
+                    <div class="col-md-6 col-lg-4 advertising new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/advertising-2.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                         
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/advertising-2.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">ADVERSTISING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>    
+                        </div>              
+                    </div> 
+                    <div class="col-md-6 col-lg-4 web">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/web-4.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/web-4.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">WEB</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                     
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 advertising"> 
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/advertising-1.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                               
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/advertising-1.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">ADVERSITING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                       
+                    </div> 
+                    <div class="col-md-6 col-lg-4 web new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/web-3.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">  
+                           <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/web-3.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">WEB</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                     
+                    </div>
+                    <div class="col-md-6 col-lg-4 advertising new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/advertising-3.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">       
+                           <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/advertising-3.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">ADVERSITING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                       
+                    </div> 
+                    <div class="col-md-6 col-lg-4 advertising new"> 
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/advertising-4.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">            
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/advertising-4.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">ADVERTISING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>
+                                
+                    </div> 
+                    <div class="col-md-6 col-lg-4 branding new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/branding-1.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                        
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/branding-1.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">BRANDING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div> 
+                        </div>
+                    </div> 
+                    <div class="col-md-6 col-lg-4 branding">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/branding-2.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">  
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/branding-2.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">BRANDING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                     
+                    </div> 
+                    <div class="col-md-6 col-lg-4 branding new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/branding-3.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">   
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/branding-3.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">BRANDING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                    
+                    </div> 
+                    <div class="col-md-6 col-lg-4 branding">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/branding-4.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                      
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/branding-4.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">BRANDING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                      
+                    </div> 
+                    <div class="col-md-6 col-lg-4 branding">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/branding-5.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">          
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/branding-5.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">BRANDING</h6>
+                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                </div>
+                            </div>
+                        </div>                                                   
+                    </div>
+                </div> 
+            </div>  
+        </div>            
+    </section>-->
+    
+    <!--<section class="section" id="FAQ">
+        <div class="container">
+            <h2 class="mb-5 pb-4"><span class="text-danger">Frequently</span> Asked Questions</h2>
+            <div class="row">
+                
+                <div class="col-md-12 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">How are you?</h5>
+                            <P>I'm delighted that you do care about my well-being. I'm excited about all the great stuff I'm going to embrace today!</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-12 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Tea or coffee?</h5>
+                            <P>Tea.</P>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-12 col-sm-6">
+                    <div class="card mb-4">
+                       <div class="card-header">
+                            <i class="text-danger" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body px-4 py-3">
+                            <h5 class="mb-3 card-title text-dark">Is your AI sentient?</h5>
+                            <P>Is the Cauchy–Schwarz inequality sentient? So are my models.</P>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>-->
+
+    <!--<div class="section contact" id="contact">
+        <div id="map" class="map"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="contact-form-card">
+                        <h4 class="contact-title">Send a message</h4>
+                        <form action="">
+                            <div class="form-group">
+                                <input  class="form-control" type="text" placeholder="Name *" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="email" placeholder="Email *" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id=" placeholder="Message *" rows="7" required></textarea>
+                            </div>
+                            <div class="form-group ">
+                                <button type="submit" class="form-control btn btn-primary" >Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="contact-info-card">
+                        <h4 class="contact-title">Get in touch</h4>
+                        <div class="row mb-2">
+                            <div class="col-1 pt-1 mr-1">
+                                <i class="ti-mobile icon-md"></i>
+                            </div>
+                            <div class="col-10 ">
+                                <h6 class="d-inline">Phone : <br> <span class="text-muted">+ (123) 456-789</span></h6>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-1 pt-1 mr-1">
+                                <i class="ti-map-alt icon-md"></i>
+                            </div>
+                            <div class="col-10">
+                                <h6 class="d-inline">Address :<br> <span class="text-muted">12345 Fake ST NoWhere AB Country.</span></h6>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-1 pt-1 mr-1">
+                                <i class="ti-envelope icon-md"></i>
+                            </div>
+                            <div class="col-10">
+                                <h6 class="d-inline">Email :<br> <span class="text-muted">info@website.com</span></h6>
+                            </div>
+                        </div>
+                        <ul class="social-icons pt-4">
+                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-facebook" aria-hidden="true"></i></a></li>
+                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-twitter" aria-hidden="true"></i></a></li>
+                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-google" aria-hidden="true"></i></a></li>
+                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-instagram" aria-hidden="true"></i></a></li>
+                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-github" aria-hidden="true"></i></a></li>
+                        </ul> 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>-->
+    
+    <footer class="footer py-3">
+        <div class="container">
+            <p class="small mb-0 text-light">
+                &copy; <script>document.write(new Date().getFullYear())</script> Created With <i class="ti-heart text-danger"></i> By <a href="http://devcrud.com" target="_blank"><span class="text-danger" title="Bootstrap 4 Themes and Dashboards">DevCRUD</span></a> 
+            </p>
+        </div>
+    </footer>
+
+	<!-- core  -->
+    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- bootstrap 3 affix -->
+    <script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
+
+    <!-- Isotope  -->
+    <script src="assets/vendors/isotope/isotope.pkgd.js"></script>
+    
+    <!-- Google mpas -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script>
+
+    <!-- JohnDoe js -->
+    <script src="assets/js/scripts.js"></script>
+
+</body>
+</html>
