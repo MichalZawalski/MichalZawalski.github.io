@@ -88,8 +88,8 @@
         <div class="container">
             <h2 class="mb-5"><span class="text-danger">My</span> Research</h2>
             <p>My primary research interests revolve around planning algorithms, variations of DQN, and environments with discrete observations.
-            I am particularly drawn to simple yet effective strategies that offer significant advantages, such as Hindsight Experience Replay or network resets.
-            In contrast, I'm not overfond of bootstrapping, despite it is often a reasonable choice.</p>
+            I am particularly drawn to simple yet effective strategies that offer significant advantages, such as Hindsight Experience Replay or Scaling by Resetting.
+            In contrast, I'm not overfond of bootstrapping, despite it is often a reasonable approach.</p>
             <p>In my view, truly challenging problems require agents to rely on planning to select actions, and I find that this process is much more efficient when agents use subgoals instead of low-level actions.</p>
             <p>I have also developed a keen interest in Natural Language Processing, which I have been studying since before it became a mainstream topic.
             I have previously worked as an NLP researcher in several companies.
@@ -515,187 +515,144 @@
         </div>
     </section>-->
     
-    <!--<section class="section bg-custom-gray" id="interests">
+    <section class="section bg-custom-gray" id="interests">
         <div class="container">
             <h1 class="mb-5"><span class="text-danger">My</span> Interests</h1>
             <div class="portfolio">
-                <div class="filters">
-                    <a href="#" data-filter=".new" class="active">
-                        New
-                    </a>
-                    <a href="#" data-filter=".advertising">
-                        Advertising
-                    </a>
-                    <a href="#" data-filter=".branding">
-                        Branding
-                    </a>
-                    <a href="#" data-filter=".web">
-                        Web
-                    </a>
-                </div>
-                <div class="portfolio-container"> 
-                    <div class="col-md-6 col-lg-4 web new">
+                <div class="portfolio-container">
+                    <div class="col-md-6 col-lg-4 new">
                         <div class="portfolio-item">
-                            <img src="assets/imgs/web-1.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
+                            <img src="assets/imgs/interests/sport.jpg" class="img-fluid" alt="Sport">
                             <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/web-1.jpg"></a>
                                 <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                    <h6 class="title">SPORT</h6>
+                                    <p class="subtitle">In particular: Football, Snooker, and American football</p>
                                 </div>
-                            </div>   
-                        </div>             
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-lg-4 web new">
+                    <div class="col-md-6 col-lg-4 new">
                         <div class="portfolio-item">
-                            <img src="assets/imgs/web-2.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
+                            <img src="assets/imgs/interests/ctf.jpg" class="img-fluid" alt="CTF">
                             <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/web-2.jpg"></a>
                                 <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                    <h6 class="title">Capture The Flag</h6>
+                                    <p class="subtitle">Exploit and enjoy!</p>
                                 </div>
-                            </div> 
-                        </div>                         
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-lg-4 advertising new">
+                    <div class="col-md-6 col-lg-4 new">
                         <div class="portfolio-item">
-                            <img src="assets/imgs/advertising-2.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                         
+                            <img src="assets/imgs/interests/drawing.jpg" class="img-fluid" alt="Drawing">
                             <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/advertising-2.jpg"></a>
                                 <div class="text-holder">
-                                    <h6 class="title">ADVERSTISING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                    <h6 class="title">DRAWING</h6>
+                                    <p class="subtitle">It takes some time until I'm satisfied with the result...</p>
                                 </div>
-                            </div>    
-                        </div>              
-                    </div> 
-                    <div class="col-md-6 col-lg-4 web">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 new">
                         <div class="portfolio-item">
-                            <img src="assets/imgs/web-4.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
+                            <img src="assets/imgs/interests/hiking.jpg" class="img-fluid" alt="Hiking">
                             <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/web-4.jpg"></a>
                                 <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                    <h6 class="title">HIKING</h6>
+                                    <p class="subtitle">My favourite outdoor activity.</p>
                                 </div>
                             </div>
-                        </div>                                                     
+                        </div>
                     </div>
-
-                    <div class="col-md-6 col-lg-4 advertising"> 
+                    <div class="col-md-6 col-lg-4 new">
                         <div class="portfolio-item">
-                            <img src="assets/imgs/advertising-1.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                               
+                            <img src="assets/imgs/interests/lotr.png" class="img-fluid" alt="The Lord of the Rings">
                             <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/advertising-1.jpg"></a>
                                 <div class="text-holder">
-                                    <h6 class="title">ADVERSITING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                    <h6 class="title">THE LORD OF THE RINGS</h6>
+                                    <p class="subtitle">Best movie ever, I know it by heart. Literally, check me!</p>
                                 </div>
                             </div>
-                        </div>                                                       
-                    </div> 
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/web-3.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">  
-                           <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/web-3.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>                                                     
+                        </div>
                     </div>
-                    <div class="col-md-6 col-lg-4 advertising new">
+                    <div class="col-md-6 col-lg-4 new">
                         <div class="portfolio-item">
-                            <img src="assets/imgs/advertising-3.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">       
+                            <img src="assets/imgs/interests/competitive.JPG" class="img-fluid" alt="Competitive programming">
+                            <div class="content-holder">
+                                <div class="text-holder">
+                                    <h6 class="title">COMPETITIVE PROGRAMMING</h6>
+                                    <p class="subtitle">I enjoy taking part in algorithmic contests, optimisation challenges and bot programming tournaments.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 new">
+                        <div class="portfolio-item">
+                           <img src="assets/imgs/interests/xkcd.png" class="img-fluid img-center" alt="XKCD">
                            <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/advertising-3.jpg"></a>
                                 <div class="text-holder">
-                                    <h6 class="title">ADVERSITING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>                                                       
-                    </div> 
-                    <div class="col-md-6 col-lg-4 advertising new"> 
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/advertising-4.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">            
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/advertising-4.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">ADVERTISING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                    <h6 class="title">XKCD</h6>
+                                    <p class="subtitle">Some of the comics are really funny. My favourite include: <a>Coordinate precision</a>, <a>RTL</a>, <a>Faust 2.0</a>, <a>Unpickable</a>, <a>Sky color</a>, <a>Meta-analysis</a>, <a>Location reviews</a>, and others.</p>
                                 </div>
                             </div>
                         </div>
-                                
-                    </div> 
-                    <div class="col-md-6 col-lg-4 branding new">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-1.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                        
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-1.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div> 
-                        </div>
-                    </div> 
-                    <div class="col-md-6 col-lg-4 branding">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-2.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">  
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-2.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>                                                     
-                    </div> 
-                    <div class="col-md-6 col-lg-4 branding new">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-3.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">   
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-3.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>                                                    
-                    </div> 
-                    <div class="col-md-6 col-lg-4 branding">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-4.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">                      
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-4.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>                                                      
-                    </div> 
-                    <div class="col-md-6 col-lg-4 branding">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-5.jpg" class="img-fluid" alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">          
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-5.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>                                                   
                     </div>
-                </div> 
-            </div>  
-        </div>            
-    </section>-->
+                    <div class="col-md-6 col-lg-4 new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/interests/boardgames.jpg" class="img-fluid" alt="Board games">
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/interests/tricks.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">BOARD GAMES</h6>
+                                    <p class="subtitle">Perfect entertainment, I often play with my friends.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/interests/modeling.jpg" class="img-fluid" alt="3D modeling">
+                            <div class="content-holder">
+                                <div class="text-holder">
+                                    <h6 class="title">3D MODELING</h6>
+                                    <p class="subtitle">I use Cinema 4D for modeling.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/interests/math.jpg" class="img-fluid" alt="Recreational mathematics">
+                            <div class="content-holder">
+                                <div class="text-holder">
+                                    <h6 class="title">RECREATIONAL MATHEMATICS</h6>
+                                    <p class="subtitle">Puzzles are fun!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 new">
+                        <div class="portfolio-item">
+                            <img src="assets/imgs/interests/tricks.jpg" class="img-fluid" alt="Card tricks">
+                            <div class="content-holder">
+                                <a class="img-popup" href="assets/imgs/interests/tricks.jpg"></a>
+                                <div class="text-holder">
+                                    <h6 class="title">CARD TRICKS</h6>
+                                    <p class="subtitle">Nice brain teasers. Don't be fooled!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     
     <!--<section class="section" id="FAQ">
         <div class="container">
