@@ -10754,6 +10754,18 @@ button.bg-dark:focus {
   text-transform: capitalize !important;
 }
 
+.font40 {
+  font-size: 40px;
+}
+
+.font30 {
+  font-size: 30px;
+}
+
+.font20 {
+  font-size: 20px;
+}
+
 .font-weight-light {
   font-weight: 300 !important;
 }
@@ -10832,6 +10844,10 @@ a.text-danger:hover, a.text-danger:focus {
 
 .text-light {
   color: #f8f9fa !important;
+}
+
+.text-medium {
+  color: #c8c9ca !important;
 }
 
 a.text-light:hover, a.text-light:focus {
@@ -10990,6 +11006,10 @@ p {
 }
 
 .icon-xl {
+  font-size: 50px;
+}
+
+.icon-xxl {
   font-size: 65px;
 }
 
@@ -11297,11 +11317,33 @@ p {
   max-width: 350px;
 }
 
+.blog-card .img-holder-cover {
+  min-width: 350px;
+  max-width: 350px;
+}
+
+.blog-card .img-holder-contain {
+  min-width: 350px;
+  max-width: 350px;
+}
+
 .blog-card .img-holder img {
+  width: 100%;
+  height: 100%;
+}
+
+.blog-card .img-holder-cover img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.blog-card .img-holder-contain img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .blog-card .content-holder {
@@ -11696,4 +11738,8 @@ pre .code {
   background: #F85C70;
   display: block;
   margin-top: 10px;
+}
+
+.margin-bottom-1 {
+  margin-bottom: 1rem;
 }
