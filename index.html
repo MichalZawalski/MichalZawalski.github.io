@@ -13,6 +13,42 @@
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    <!--<div class="cookie-consent" id="cookieConsentBox">
+        <span class="close-btn" id="closeCookieConsent">&times;</span>
+        <h1 class="cookie-consent-text">Cookies and tracking pixels</h1>
+        <p class="cookie-consent-text">This website places pixels on the screen to form text and images, some of which may remain in your memory after you close the page. I may use cookies whenever hungry.</p>
+
+        <h1 class="cookie-consent-text">Personal data and local storage</h1>
+        <p class="cookie-consent-text">Please don't send me your personal data. I don't want your personal data. It is hard enough to manage my own personal data. I may use the local storage on your device if I run out of space on my end.</p>
+
+        <p class="cookie-consent-text">By clicking the fake button below you certify that you are willing to agree to whatever policy I may think of without reading it first, to hide an annoying cookie message.</p>
+        <button id="acceptCookies">OK</button>
+    </div>
+    <script>
+        // Function to check screen width and show the cookie consent if width is >= 600px
+        function showCookieConsent() {
+            if (window.innerWidth >= 600) {  // Check if screen width is at least 600px
+                document.getElementById("cookieConsentBox").style.display = "block";
+            }
+        }
+
+        // Close button functionality
+        document.getElementById("closeCookieConsent").addEventListener("click", function() {
+            document.getElementById("cookieConsentBox").style.display = "none";
+        });
+
+//         // OK button functionality
+//         document.getElementById("acceptCookies").addEventListener("click", function() {
+//             document.getElementById("cookieConsentBox").style.display = "none";
+//             // You can add logic here to save cookie consent in local storage or cookies
+//         });
+
+        // Call the function on page load
+        window.onload = showCookieConsent;
+
+//         // Re-check the screen width when window is resized
+//         window.onresize = showCookieConsent;
+    </script>-->
     
     <header class="header">
         <div class="container">
@@ -97,6 +133,25 @@
             <p>Below, you will find a list of my recent publications.</p>
             <br>
             <div class="row">
+            
+                <div class="blog-card">
+                    <div class="img-holder-contain">
+                        <img src="assets/imgs/ecot_thumbnail.png" alt="Embodied Chain-of-Thought thumbnail">
+                    </div>
+                    <div class="content-holder">
+                        <h6 class="title">Robotic Control via Embodied Chain-of-Thought Reasoning</h6>
+
+                        <p class="post-details">
+                            <b>Michał Zawalski</b>, William Chen, Karl Pertsch, Oier Mees, Chelsea Finn, Sergey Levine<br>
+                            <b><em style="font-size: 150%; font-style: normal;">CoRL 2024</em></b>
+                        </p>
+                        
+                        <p>We train a vision-language-action policy to autoregressively generate textual reasoning (the "embodied chain of thought," or ECoT) in response to commands and observations before it chooses a robot action. Such reasoning contains high-level reasoning steps (task, plan, and subtask) to encourage the model to "think carefully" and low-level features (movement, gripper position, and labeled object bounding boxes) to get the model to "look carefully".</p>
+
+                        <a href="https://arxiv.org/pdf/2407.08693" class="btn btn-primary w-lg" style="margin-right: 1em">Read Paper</a>
+                        <a href="https://embodied-cot.github.io/" class="btn btn-primary w-lg" style="margin-right: 1em">Project website</a>
+                    </div>
+                </div>
             
                 <div class="blog-card">
                     <div class="img-holder-contain">
