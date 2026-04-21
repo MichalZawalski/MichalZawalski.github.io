@@ -2,8 +2,8 @@
 
 let rawData = null;
 let dataMap = {};
-let sortCol = null;
-let sortAsc = true;
+let sortCol = "__avg";
+let sortAsc = false;
 let sortRow = null;           // model key for sorting columns
 let sortRowAsc = true;
 let activeModelDetail = null;
