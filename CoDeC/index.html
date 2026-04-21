@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoDeC: Detecting Data Contamination in LLMs via In-Context Learning</title>
+  <meta name="description" content="CoDeC is a simple, accurate method to detect and quantify training data contamination in large language models. Published at ICLR 2026.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Dosis:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Parent site styles -->
+  <link rel="stylesheet" href="../assets/vendors/themify-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../assets/vendors/bootstrap/bootstrap.min.css">
+
+  <!-- Project-specific styles -->
+  <link rel="stylesheet" href="assets/css/codec.css">
+</head>
+<body>
+
+  <!-- ===== Section 1: Hero ===== -->
+  <section class="codec-hero" id="home">
+    <a href="../index.html" class="back-link">&larr; Micha&#322; Zawalski</a>
+
+    <div class="hero-content">
+      <div class="hero-badge">ICLR 2026</div>
+      <h1 class="hero-title">Detecting Data Contamination in LLMs via In-Context Learning</h1>
+      <p class="hero-tagline">A simple, accurate method that reveals what your LLM has already memorized &mdash; by measuring how in-context examples change its confidence.</p>
+      <p class="hero-authors">
+        <strong>Micha&#322; Zawalski</strong>, Meriem Boubdir, Klaudia Ba&#322;azy, Besmira Nushi, Pablo Ribalta<br>
+        NVIDIA
+      </p>
+      <div class="hero-buttons">
+        <a href="https://openreview.net/pdf?id=YlpaaYxx4t" target="_blank" class="btn btn-primary btn-rounded">Read Paper</a>
+        <a href="https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator/examples/notebooks/contamination_detection_demo.ipynb" target="_blank" class="btn btn-primary btn-rounded">Code</a>
+        <a href="leaderboard/" class="btn btn-primary btn-rounded">Leaderboard</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 2: The Problem ===== -->
+  <section class="section-codec" id="problem">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7 fade-in-up">
+          <h2 class="section-heading"><span class="accent">The</span> Problem</h2>
+          <p class="section-subheading">LLM benchmarks are losing their meaning.</p>
+          <p>When a model scores 95% on a benchmark, how much of that is genuine reasoning versus memorized answers? As LLMs train on ever-larger web corpora, popular benchmarks inevitably leak into training data. This <strong>data contamination</strong> silently inflates reported performance, making fair model comparison impossible.</p>
+          <p>Existing detection methods require access to training data, need extensive parameter tuning per model, or fail to produce reliable, interpretable results at scale. None of them offer a practical, out-of-the-box solution.</p>
+          <p>We need a method that works with <em>any model</em>, <em>any dataset</em>, automatically.</p>
+        </div>
+        <div class="col-lg-4 offset-lg-1 fade-in-up" data-delay="200">
+          <div class="stat-card">
+            <div class="stat-number">40+</div>
+            <div class="stat-label">Models evaluated</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Benchmarks tested</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">99.9%</div>
+            <div class="stat-label">Dataset-level AUC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 3: The Key Insight ===== -->
+  <section class="section-codec bg-navy" id="insight">
+    <div class="container">
+      <div class="text-center fade-in-up">
+        <h2 class="section-heading" style="color:#fff;"><span class="accent">The</span> Key Insight</h2>
+        <p style="color:rgba(255,255,255,0.6); max-width:650px; margin:0 auto 40px; font-size:1.05rem;">
+          Models respond differently to in-context examples depending on whether they have already memorized the data.
+        </p>
+      </div>
+
+      <div class="row" style="gap: 24px 0;">
+        <div class="col-lg-6 fade-in-up" data-delay="100">
+          <div class="insight-panel">
+            <div class="insight-icon green">
+              <i class="ti-arrow-up"></i>
+            </div>
+            <h4>Unseen Data</h4>
+            <p>When a model <strong style="color:#27ae60;">hasn't seen</strong> a dataset, in-context examples from the same distribution provide useful patterns &mdash; new stylistic cues, vocabulary, and structure. The model's confidence on target samples <strong style="color:#27ae60;">increases</strong>.</p>
+            <img src="assets/imgs/figure1a.png" alt="Confidence increases for unseen data when context is added">
+          </div>
+        </div>
+        <div class="col-lg-6 fade-in-up" data-delay="300">
+          <div class="insight-panel">
+            <div class="insight-icon red">
+              <i class="ti-arrow-down"></i>
+            </div>
+            <h4>Memorized Data</h4>
+            <p>When a model <strong style="color:#e74c3c;">has memorized</strong> a dataset, it has already internalized all its patterns. Adding more examples from the same dataset disrupts memorization, and the model's confidence <strong style="color:#e74c3c;">decreases</strong>.</p>
+            <img src="assets/imgs/figure1b.png" alt="Confidence decreases for memorized data when context is added">
+          </div>
+        </div>
+      </div>
+
+      <p class="insight-summary fade-in-up" data-delay="400">
+        <strong>CoDeC</strong> measures this difference. The fraction of samples where confidence drops when context is added = the <strong>contamination score</strong>.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 4: How It Works ===== -->
+  <section class="section-codec" id="method">
+    <div class="container">
+      <div class="text-center fade-in-up">
+        <h2 class="section-heading"><span class="accent">How</span> CoDeC Works</h2>
+        <p class="section-subheading" style="margin-left:auto;margin-right:auto;">Four simple steps. Two forward passes. One clear answer.</p>
+      </div>
+
+      <div class="pipeline-container">
+        <div class="pipeline-step fade-in-up" data-delay="0">
+          <div class="step-number">1</div>
+          <h5>Baseline</h5>
+          <p>Compute the model's average log-likelihood on target tokens without any context.</p>
+        </div>
+        <div class="pipeline-step fade-in-up" data-delay="150">
+          <div class="step-number">2</div>
+          <h5>In-Context</h5>
+          <p>Prepend random samples from the same dataset and measure the model's predictions again.</p>
+        </div>
+        <div class="pipeline-step fade-in-up" data-delay="300">
+          <div class="step-number">3</div>
+          <h5>Compare</h5>
+          <p>Compute &Delta;(x) = logprob<sub>context</sub>(x) &minus; logprob<sub>baseline</sub>(x) for each sample.</p>
+        </div>
+        <div class="pipeline-step fade-in-up" data-delay="450">
+          <div class="step-number">4</div>
+          <h5>Aggregate</h5>
+          <p>The contamination score is the fraction of samples where &Delta; &lt; 0 (confidence dropped).</p>
+        </div>
+      </div>
+
+      <div class="formula-box fade-in-up" data-delay="500">
+        <span class="formula">S<sub>CoDeC</sub>(&Dscr;) = (1/N) &sum; &Ropf;[&Delta;(x<sub>i</sub>) &lt; 0]</span>
+      </div>
+
+      <div class="row justify-content-center mt-5 fade-in-up" data-delay="200">
+        <div class="col-lg-10">
+          <div class="result-figure">
+            <img src="assets/imgs/figure2.png" alt="CoDeC pipeline overview diagram">
+          </div>
+          <p class="result-caption text-center">Overview of the CoDeC pipeline. For each dataset element, CoDeC augments the context with samples from the same dataset. A decrease in the model's logits indicates potential contamination.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 5: Why It Works ===== -->
+  <section class="section-codec bg-light-gray" id="why">
+    <div class="container">
+      <div class="text-center fade-in-up">
+        <h2 class="section-heading"><span class="accent">Why</span> It Works</h2>
+        <p class="section-subheading" style="margin-left:auto;margin-right:auto;">The effectiveness of CoDeC stems from several intuitive principles.</p>
+      </div>
+
+      <div class="row" style="gap: 24px 0;">
+        <div class="col-md-6 fade-in-up" data-delay="0">
+          <div class="why-card">
+            <div class="why-icon"><i class="ti-signal"></i></div>
+            <h5>Dataset-Specific Priors</h5>
+            <p>Models trained on a dataset internalize its unique style, vocabulary, and implicit assumptions. If these priors are already memorized, additional in-context examples add little useful information.</p>
+          </div>
+        </div>
+        <div class="col-md-6 fade-in-up" data-delay="150">
+          <div class="why-card">
+            <div class="why-icon"><i class="ti-loop"></i></div>
+            <h5>Context Disrupts Memorization</h5>
+            <p>For contaminated data, adding memorized in-context examples can interfere with the model's memorized token sequences. The context triggers conflicting patterns, confusing the model and reducing its confidence.</p>
+          </div>
+        </div>
+        <div class="col-md-6 fade-in-up" data-delay="300">
+          <div class="why-card">
+            <div class="why-icon"><i class="ti-bar-chart"></i></div>
+            <h5>ICL Mirrors Finetuning</h5>
+            <p>Contaminated models resemble finetuned models near saturation &mdash; additional training yields minimal gains. CoDeC effectively measures the remaining learning capacity for the target dataset.</p>
+          </div>
+        </div>
+        <div class="col-md-6 fade-in-up" data-delay="450">
+          <div class="why-card">
+            <div class="why-icon"><i class="ti-target"></i></div>
+            <h5>Loss Landscape Geometry</h5>
+            <p>Memorized samples sit in narrow, sharp local minima. Even small perturbations (like adding context) destabilize predictions. Unseen data occupies flatter regions that benefit from additional context.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 6: Key Results ===== -->
+  <section class="section-codec" id="results">
+    <div class="container">
+      <div class="fade-in-up">
+        <h2 class="section-heading"><span class="accent">Key</span> Results</h2>
+        <p class="section-subheading">CoDeC produces clear, interpretable contamination scores across diverse models and datasets.</p>
+      </div>
+
+      <!-- Main validation -->
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-8 fade-in-up">
+          <div class="result-figure">
+            <img src="assets/imgs/figure3.png" alt="Box plots comparing CoDeC vs baseline methods">
+          </div>
+          <p class="result-caption">Contamination scores for training (red) and unseen (blue) datasets. Each point is a model&ndash;dataset pair. CoDeC achieves the best separation, enabling consistent classification across models and datasets.</p>
+        </div>
+        <div class="col-lg-4 fade-in-up" data-delay="200">
+          <div class="highlight-box">
+            <div class="highlight-stat">99.9%</div>
+            <p>Dataset-level AUC across all evaluated models. CoDeC cleanly separates seen from unseen data, while baselines (Vanilla Loss, Min-K%, Zlib Ratio) fail to provide reliable separation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- During training -->
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-5 order-lg-2 fade-in-up">
+          <div class="result-figure">
+            <img src="assets/imgs/figure4.png" alt="CoDeC scores during OLMo 7B training">
+          </div>
+          <p class="result-caption">CoDeC scores during training of OLMo 7B. Contamination is detectable very early in training.</p>
+        </div>
+        <div class="col-lg-7 order-lg-1 fade-in-up" data-delay="100">
+          <h4 style="font-family:'Dosis',sans-serif; font-weight:600;">Early Detection During Training</h4>
+          <p>CoDeC detects contamination in the very early stages of training. After just <strong>2% of training</strong> (10k out of 477k steps), contamination scores have nearly converged to their final values. Training dataset scores rise sharply while unseen dataset scores settle near their final values, remaining largely stable through the rest of training.</p>
+          <p>This makes CoDeC highly effective for identifying and preventing benchmark leaks during model development.</p>
+        </div>
+      </div>
+
+      <!-- Notable findings -->
+      <div class="highlight-box fade-in-up">
+        <h4 style="font-family:'Dosis',sans-serif; font-weight:600; margin-bottom:12px;">Notable Finding</h4>
+        <p><strong>Qwen 2.5</strong> scored <strong style="color:#F85C70;">100%</strong> contamination on GSM8K's training set but only <strong>27%</strong> on the test set &mdash; CoDeC detected this difference, confirming that the training set was deliberately included while the test set was excluded. This validates both CoDeC's sensitivity and the model developers' data curation practices.</p>
+        <p>
+          <a href="leaderboard/" style="color:#F85C70; font-weight:600;">Explore the full contamination leaderboard &rarr;</a>
+        </p>
+      </div>
+
+      <!-- Contamination transfer -->
+      <div class="row align-items-center mt-5">
+        <div class="col-lg-8 fade-in-up">
+          <div class="result-figure">
+            <img src="assets/imgs/figure7.png" alt="Contamination transfer between MMLU and related distributions">
+          </div>
+          <p class="result-caption">Contamination transfer between MMLU and related distributions. CoDeC detects indirect contamination from related data, even when the exact benchmark was never included in training.</p>
+        </div>
+        <div class="col-lg-4 fade-in-up" data-delay="100">
+          <h4 style="font-family:'Dosis',sans-serif; font-weight:600;">Beyond Direct Contamination</h4>
+          <p>CoDeC captures not only direct memorization but also contamination arising from training on related or augmented data. Finetuning on MMLU makes the model highly contaminated even on unseen questions, and contamination scores remain high even when cropping evaluation data to just 25% of the original.</p>
+          <p>This cannot be detected by simple n-gram overlap checks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 7: Applications ===== -->
+  <section class="section-codec bg-navy" id="applications">
+    <div class="container">
+      <div class="text-center fade-in-up">
+        <h2 class="section-heading" style="color:#fff;"><span class="accent">Applications</span></h2>
+        <p style="color:rgba(255,255,255,0.6); max-width:600px; margin:0 auto 40px; font-size:1.05rem;">CoDeC enables a range of practical use cases for improving LLM evaluation and development.</p>
+      </div>
+
+      <div class="row" style="gap:24px 0;">
+        <div class="col-lg-4 col-md-6 fade-in-up" data-delay="0">
+          <div class="app-card">
+            <div class="app-icon"><i class="ti-check-box"></i></div>
+            <h5>Fair Benchmark Evaluation</h5>
+            <p>Identify when reported benchmark scores may be inflated by training data leakage, enabling more trustworthy performance comparisons.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 fade-in-up" data-delay="100">
+          <div class="app-card">
+            <div class="app-icon"><i class="ti-search"></i></div>
+            <h5>Model Auditing</h5>
+            <p>Verify training data claims for open-weight models. CoDeC works even when training corpora are undisclosed, requiring only gray-box access.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 fade-in-up" data-delay="200">
+          <div class="app-card">
+            <div class="app-icon"><i class="ti-shield"></i></div>
+            <h5>Training Quality Control</h5>
+            <p>Detect accidental benchmark inclusion during data curation. CoDeC identifies contamination after just 2% of training, enabling early intervention.</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 fade-in-up" data-delay="300">
+          <div class="app-card">
+            <div class="app-icon"><i class="ti-exchange-vertical"></i></div>
+            <h5>Informed Model Comparison</h5>
+            <p>Among models with similar benchmark accuracy, those with lower CoDeC scores should generalize better. CoDeC separates genuine capability from memorization.</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 fade-in-up" data-delay="400">
+          <div class="app-card">
+            <div class="app-icon"><i class="ti-link"></i></div>
+            <h5>Partial Contamination Detection</h5>
+            <p>Catch indirect leakage from related, augmented, or synthetically generated data &mdash; contamination that n-gram overlap checks cannot detect.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 8: Leaderboard Teaser ===== -->
+  <section class="section-codec" id="leaderboard">
+    <div class="container">
+      <div class="text-center fade-in-up">
+        <h2 class="section-heading"><span class="accent">Contamination</span> Leaderboard</h2>
+        <p class="section-subheading" style="margin-left:auto;margin-right:auto;">We evaluated 40+ recent models across 20+ popular benchmarks. Explore the full results interactively.</p>
+      </div>
+
+      <div class="teaser-table-wrapper fade-in-up" data-delay="200">
+        <table class="teaser-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>AIME 2024</th>
+              <th>AIME 2025</th>
+              <th>MMLU-Pro</th>
+              <th>GSM8K (test)</th>
+              <th>GPQA Diamond</th>
+              <th>HumanEval</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Phi-4-mini-instruct</td>
+              <td style="background:hsl(54,70%,85%)">52%</td>
+              <td style="background:hsl(73,70%,85%)">39%</td>
+              <td style="background:hsl(96,70%,85%)">20%</td>
+              <td style="background:hsl(51,70%,85%)">58%</td>
+              <td style="background:hsl(72,70%,85%)">40%</td>
+              <td style="background:hsl(32,70%,85%)">73%</td>
+            </tr>
+            <tr>
+              <td>Phi-4-reasoning-plus</td>
+              <td style="background:hsl(19,70%,85%)">84%</td>
+              <td style="background:hsl(48,70%,85%)">60%</td>
+              <td style="background:hsl(72,70%,85%)">40%</td>
+              <td style="background:hsl(24,70%,85%)">80%</td>
+              <td style="background:hsl(62,70%,85%)">48%</td>
+              <td style="background:hsl(24,70%,85%)">80%</td>
+            </tr>
+            <tr>
+              <td>Llama-3.1-8B</td>
+              <td style="background:hsl(45,70%,85%)">62%</td>
+              <td style="background:hsl(116,70%,85%)">3%</td>
+              <td style="background:hsl(72,70%,85%)">40%</td>
+              <td style="background:hsl(96,70%,85%)">20%</td>
+              <td style="background:hsl(113,70%,85%)">6%</td>
+              <td style="background:hsl(73,70%,85%)">39%</td>
+            </tr>
+            <tr>
+              <td>Qwen2.5-7B</td>
+              <td style="background:hsl(43,70%,85%)">64%</td>
+              <td style="background:hsl(114,70%,85%)">5%</td>
+              <td style="background:hsl(96,70%,85%)">20%</td>
+              <td style="background:hsl(36,70%,85%)">70%</td>
+              <td style="background:hsl(116,70%,85%)">3%</td>
+              <td style="background:hsl(114,70%,85%)">5%</td>
+            </tr>
+            <tr>
+              <td>Gemma-3-12b-pt</td>
+              <td style="background:hsl(113,70%,85%)">6%</td>
+              <td style="background:hsl(108,70%,85%)">10%</td>
+              <td style="background:hsl(116,70%,85%)">3%</td>
+              <td style="background:hsl(104,70%,85%)">13%</td>
+              <td style="background:hsl(113,70%,85%)">7%</td>
+              <td style="background:hsl(116,70%,85%)">2%</td>
+            </tr>
+            <tr>
+              <td>DeepSeek-R1-Distill-Llama-8B</td>
+              <td style="background:hsl(101,70%,85%)">16%</td>
+              <td style="background:hsl(96,70%,85%)">20%</td>
+              <td style="background:hsl(78,70%,85%)">35%</td>
+              <td style="background:hsl(92,70%,85%)">23%</td>
+              <td style="background:hsl(90,70%,85%)">25%</td>
+              <td style="background:hsl(88,70%,85%)">27%</td>
+            </tr>
+            <tr>
+              <td>Nemotron-Super-49B-v1</td>
+              <td style="background:hsl(79,70%,85%)">34%</td>
+              <td style="background:hsl(106,70%,85%)">12%</td>
+              <td style="background:hsl(73,70%,85%)">38%</td>
+              <td style="background:hsl(61,70%,85%)">49%</td>
+              <td style="background:hsl(108,70%,85%)">10%</td>
+              <td style="background:hsl(97,70%,85%)">19%</td>
+            </tr>
+            <tr>
+              <td>Mistral-Large-Instruct-2411</td>
+              <td style="background:hsl(62,70%,85%)">48%</td>
+              <td style="background:hsl(115,70%,85%)">4%</td>
+              <td style="background:hsl(78,70%,85%)">35%</td>
+              <td style="background:hsl(98,70%,85%)">18%</td>
+              <td style="background:hsl(90,70%,85%)">25%</td>
+              <td style="background:hsl(114,70%,85%)">5%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center fade-in-up" data-delay="300">
+        <a href="leaderboard/" class="btn btn-primary btn-rounded" style="min-width:240px; font-size:1rem; padding:12px 32px;">Explore Full Leaderboard</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 9: Citation ===== -->
+  <section class="section-codec bg-light-gray" id="citation">
+    <div class="container">
+      <div class="fade-in-up">
+        <h2 class="section-heading"><span class="accent">Cite</span> This Work</h2>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-10 fade-in-up" data-delay="100">
+          <div class="citation-block">
+            <button class="copy-btn" id="copy-bibtex">Copy</button>
+            <pre id="bibtex-content">@inproceedings{zawalski2026detecting,
+  title={Detecting Data Contamination in {LLMs} via In-Context Learning},
+  author={Zawalski, Micha{\l} and Boubdir, Meriem and Ba{\l}azy, Klaudia and Nushi, Besmira and Ribalta, Pablo},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2026},
+  url={https://openreview.net/forum?id=YlpaaYxx4t}
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Section 10: Footer ===== -->
+  <footer class="codec-footer">
+    <div>
+      <a href="https://openreview.net/pdf?id=YlpaaYxx4t" target="_blank">Paper</a>
+      <span class="separator">|</span>
+      <a href="https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator/examples/notebooks/contamination_detection_demo.ipynb" target="_blank">Code</a>
+      <span class="separator">|</span>
+      <a href="leaderboard/">Leaderboard</a>
+      <span class="separator">|</span>
+      <a href="../index.html">Main Site</a>
+    </div>
+    <div class="copyright">CoDeC &mdash; Contamination Detection via Context &mdash; ICLR 2026</div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="../assets/vendors/jquery/jquery-3.4.1.js"></script>
+  <script src="../assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+  <script src="assets/js/codec.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoDeC Contamination Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- ===== Top bar ===== -->
+  <nav id="topbar">
+    <div class="topbar-inner">
+      <a href="../" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img class="nv-logo" src="./favicon.svg" width="28" height="28" alt="CoDeC">
+        <span class="topbar-title">CoDeC</span>
+      </a>
+      <span class="topbar-sep">|</span>
+      <span class="topbar-subtitle">Contamination Detection via Context</span>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px;">
+        <a href="../" style="font-size:0.8rem;color:#aaa;text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseover="this.style.color='#76b900'" onmouseout="this.style.color='#aaa'">Project Page</a>
+        <a href="https://openreview.net/pdf?id=YlpaaYxx4t" target="_blank" style="font-size:0.8rem;color:#aaa;text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseover="this.style.color='#76b900'" onmouseout="this.style.color='#aaa'">Paper</a>
+        <a href="https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator/examples/notebooks/contamination_detection_demo.ipynb" target="_blank" style="font-size:0.8rem;color:#aaa;text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseover="this.style.color='#76b900'" onmouseout="this.style.color='#aaa'">Code</a>
+        <span id="last-updated">Loading&hellip;</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <header id="hero">
+    <h1>CoDeC Contamination Leaderboard</h1>
+    <p>Automated, model-agnostic data contamination detection via in-context learning.
+      <a href="https://openreview.net/pdf?id=YlpaaYxx4t" target="_blank" class="paper-link">Read the paper</a></p>
+  </header>
+
+  <!-- ===== Filters ===== -->
+  <section id="controls">
+    <div class="controls-inner">
+      <div class="select-group">
+        <div class="select-label-row">
+          <label>Models</label>
+          <div class="select-buttons">
+            <button onclick="selectAll('model-select')">Select all</button>
+            <button onclick="selectNone('model-select')">Clear</button>
+          </div>
+        </div>
+        <div id="model-select" class="checkbox-panel"></div>
+      </div>
+      <div class="select-group">
+        <div class="select-label-row">
+          <label>Benchmarks</label>
+          <div class="select-buttons">
+            <button onclick="selectAll('benchmark-select')">Select all</button>
+            <button onclick="selectNone('benchmark-select')">Clear</button>
+          </div>
+        </div>
+        <div id="benchmark-select" class="checkbox-panel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Table ===== -->
+  <section id="table-section">
+    <div id="table-container"></div>
+  </section>
+
+  <!-- ===== Model detail panel ===== -->
+  <section id="model-detail" style="display:none">
+    <div class="detail-inner">
+      <div id="model-detail-header">
+        <h2 id="model-detail-title"></h2>
+        <button id="model-detail-close" onclick="closeModelDetail()">
+          <span>&times;</span> Close
+        </button>
+      </div>
+      <div id="model-detail-charts"></div>
+    </div>
+  </section>
+
+  <!-- ===== Charts ===== -->
+  <section id="charts-section"></section>
+
+  <footer>
+    <span>CoDeC &mdash; Contamination Detection via Context &mdash;
+      <a href="../" style="color:var(--text-muted)">Project Page</a> &middot;
+      <a href="https://openreview.net/pdf?id=YlpaaYxx4t" target="_blank" style="color:var(--text-muted)">Paper</a> &middot;
+      <a href="https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator/examples/notebooks/contamination_detection_demo.ipynb" target="_blank" style="color:var(--text-muted)">Code</a></span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
