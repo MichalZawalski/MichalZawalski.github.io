@@ -97,7 +97,7 @@
             </div>
             <h4>Unseen Data</h4>
             <p>When a model <strong style="color:var(--nv-green)">hasn't seen</strong> a dataset, in-context examples from the same distribution provide useful patterns&mdash;new stylistic cues, vocabulary, and structure. The model's confidence on target samples <strong style="color:var(--nv-green)">increases</strong>.</p>
-            <img src="assets/imgs/figure1a.png" alt="Confidence increases for unseen data when context is added">
+            <img src="assets/imgs/logprob_unseen-1.png" alt="Confidence increases for unseen data when context is added">
           </div>
         </div>
         <div class="col-half fade-in-up" data-delay="300">
@@ -107,7 +107,7 @@
             </div>
             <h4>Memorized Data</h4>
             <p>When a model <strong style="color:#ef4444">has memorized</strong> a dataset, it has already internalized all its patterns. Adding more examples disrupts memorization, and the model's confidence <strong style="color:#ef4444">decreases</strong>.</p>
-            <img src="assets/imgs/figure1b.png" alt="Confidence decreases for memorized data when context is added">
+            <img src="assets/imgs/logprob_training-1.png" alt="Confidence decreases for memorized data when context is added">
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@
       <div style="max-width:900px;margin:0 auto;" class="fade-in-up" data-delay="200">
         <div class="result-block">
           <h4>Pipeline Overview</h4>
-          <img src="assets/imgs/figure2.png" alt="CoDeC pipeline overview diagram">
+          <img src="assets/imgs/pipeline.png" alt="CoDeC pipeline overview diagram">
           <p class="result-caption">For each dataset element, CoDeC augments the context with samples from the same dataset. A decrease in the model's logits indicates potential contamination. The overall contamination level is estimated as the fraction of samples exhibiting this effect.</p>
         </div>
       </div>
@@ -226,7 +226,7 @@
         <div class="col-two-third">
           <div class="result-block">
             <h4>CoDeC vs. Baselines</h4>
-            <img src="assets/imgs/figure3.png" alt="Box plots comparing CoDeC vs baseline methods">
+            <img src="assets/imgs/main_result.png" alt="Box plots comparing CoDeC vs baseline methods">
             <p class="result-caption">Contamination scores for training (red) and unseen (blue) datasets. Each point is a model&ndash;dataset pair. CoDeC achieves the best separation, enabling consistent classification across models and datasets.</p>
           </div>
         </div>
@@ -247,14 +247,18 @@
         <div class="col-half" style="max-width:400px;">
           <div class="result-block">
             <h4>Early Detection During Training</h4>
-            <img src="assets/imgs/figure4.png" alt="CoDeC scores during OLMo 7B training">
+            <img src="assets/imgs/training_progress.png" alt="CoDeC scores during OLMo 7B training">
             <p class="result-caption">CoDeC scores during training of OLMo 7B. Training dataset scores rise sharply early on while unseen dataset scores remain stable.</p>
           </div>
         </div>
         <div class="col-half">
           <div class="result-block">
             <h4>Contamination Transfer</h4>
-            <img src="assets/imgs/figure7.png" alt="Contamination transfer between MMLU and related distributions">
+            <div style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;">
+              <img src="assets/imgs/transfer_to.png" alt="Contamination transfer to other datasets" style="flex:1;min-width:200px;">
+              <img src="assets/imgs/transfer_from.png" alt="Contamination transfer from other datasets" style="flex:1;min-width:200px;">
+              <img src="assets/imgs/transfer_legend.png" alt="Legend" style="width:130px;flex-shrink:0;">
+            </div>
             <p class="result-caption">CoDeC detects indirect contamination from related data. Finetuning on MMLU contaminates even unseen questions. This cannot be captured by simple n-gram overlap checks.</p>
           </div>
         </div>

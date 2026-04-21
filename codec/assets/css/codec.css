@@ -301,7 +301,11 @@ a:hover { color: var(--nv-green); }
   border-radius: var(--radius-lg);
   padding: 28px 24px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
+.insight-panel p { flex: 1; }
+.insight-panel img { margin-top: auto; }
 .insight-icon {
   width: 44px;
   height: 44px;
