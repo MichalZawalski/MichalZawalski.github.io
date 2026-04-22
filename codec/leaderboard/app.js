@@ -345,8 +345,7 @@ function renderTable(models, benchmarks) {
         const pct = (entry.score * 100).toFixed(1);
         const bg = heatmapColor(entry.score);
         const fg = textColorForBg(entry.score);
-        html += `<td class="score-cell" style="background:${bg};color:${fg}">` +
-                `<a href="${entry.run_url}" target="_blank" style="color:${fg}">${pct}</a></td>`;
+        html += `<td class="score-cell" style="background:${bg};color:${fg}">${pct}</td>`;
       } else {
         html += '<td class="missing">--</td>';
       }
@@ -519,11 +518,6 @@ function createBarChartCard(benchmark, models, highlightModel) {
           },
           grid: { display: false },
         },
-      },
-      onClick: (evt, elements) => {
-        if (elements.length > 0) {
-          window.open(entries[elements[0].index].run_url, "_blank");
-        }
       },
     },
   });
