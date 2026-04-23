@@ -476,7 +476,12 @@ a:hover { color: var(--nv-green); }
 }
 .result-block img {
   border-radius: var(--radius);
-  border: 1px solid var(--border-light);
+}
+.result-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 16px;
 }
 .result-caption {
   font-size: 0.8rem;

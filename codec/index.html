@@ -63,7 +63,7 @@
         <div class="col-half fade-in-up" data-delay="200" style="max-width:320px;">
           <div class="stats-row">
             <div class="stat-card">
-              <div class="stat-number">40+</div>
+              <div class="stat-number">60+</div>
               <div class="stat-label">Models evaluated</div>
             </div>
             <div class="stat-card">
@@ -115,6 +115,11 @@
       <p class="insight-summary fade-in-up" data-delay="400">
         <strong>CoDeC</strong> measures this difference. The fraction of samples where confidence drops when context is added = the <strong>contamination score</strong>.
       </p>
+
+      <div class="insight-panel fade-in-up" data-delay="500" style="max-width:740px;margin:36px auto 0;">
+        <h4 style="font-size:0.95rem;">The IMO Analogy</h4>
+        <p>Consider a mathematician preparing for the International Mathematical Olympiad. If they trained exclusively on past IMO problems, they would internalize IMO-specific patterns&mdash;certain proof structures, problem styles, implicit assumptions. Giving them <em>more</em> IMO problems as reference during the competition wouldn't help; they've already memorized those patterns. But a mathematician with broad training who has <em>never seen</em> IMO problems would benefit greatly from the same reference material. CoDeC exploits exactly this asymmetry.</p>
+      </div>
     </div>
   </section>
 
@@ -213,59 +218,88 @@
   </section>
 
 
-  <!-- ===== Key Results ===== -->
+  <!-- ===== Validation ===== -->
   <section class="section section-alt" id="results">
     <div class="container">
       <div class="section-header fade-in-up">
-        <h2><span class="accent">Key</span> Results</h2>
-        <p>CoDeC produces clear, interpretable contamination scores across diverse models and datasets.</p>
+        <h2><span class="accent">Experimental</span> Validation</h2>
+        <p>Controlled experiments confirm that CoDeC reliably detects contamination.</p>
       </div>
 
-      <!-- Main validation -->
-      <div class="row fade-in-up">
-        <div class="col-two-third">
-          <div class="result-block">
-            <h4>CoDeC vs. Baselines</h4>
-            <img src="assets/imgs/main_result.png" alt="Box plots comparing CoDeC vs baseline methods">
-            <p class="result-caption">Contamination scores for training (red) and unseen (blue) datasets. Each point is a model&ndash;dataset pair. CoDeC achieves the best separation, enabling consistent classification across models and datasets.</p>
-          </div>
-        </div>
-        <div class="col-half" style="max-width:320px;">
-          <div class="highlight-box" style="margin-bottom:24px;">
-            <div class="big-num">99.9%</div>
-            <p>Dataset-level AUC across all evaluated models. CoDeC cleanly separates seen from unseen data, while baselines (Vanilla Loss, Min-K%, Zlib Ratio) fail to provide reliable separation.</p>
-          </div>
-          <div class="highlight-box">
-            <div class="big-num" style="font-size:1.2rem;">Early Signal</div>
-            <p>When applied during model development, CoDeC reveals contamination after just 2% of training steps (10k out of 477k), enabling early intervention.</p>
-          </div>
-        </div>
+      <div class="result-block fade-in-up" style="margin-bottom:24px;">
+        <h4>CoDeC vs. Baselines</h4>
+        <p class="result-desc">We evaluate CoDeC on models with publicly available training data. CoDeC achieves <strong>99.9% dataset-level AUC</strong>, cleanly separating seen from unseen data. Baselines (Vanilla Loss, Min-K%, Zlib Ratio) fail to provide reliable separation.</p>
+        <img src="assets/imgs/main_result.png" alt="Box plots comparing CoDeC vs baseline methods">
+        <p class="result-caption">Contamination scores for training (red) and unseen (blue) datasets. Each point is a model&ndash;dataset pair.</p>
       </div>
 
-      <!-- During training + Transfer -->
-      <div class="row fade-in-up" style="margin-top:24px;">
-        <div class="col-half" style="max-width:400px;">
-          <div class="result-block">
-            <h4>Early Detection During Training</h4>
-            <img src="assets/imgs/training_progress.png" alt="CoDeC scores during OLMo 7B training">
-            <p class="result-caption">CoDeC scores during training of OLMo 7B. Training dataset scores rise sharply early on while unseen dataset scores remain stable.</p>
+      <div class="result-block fade-in-up">
+        <h4>Finetuning Validation</h4>
+        <p class="result-desc">Finetuning any model on a dataset reliably pushes CoDeC scores toward 100%, consistently across four different architectures. This controlled experiment confirms that CoDeC accurately tracks the introduction of contamination, even for models without public training data.</p>
+        <img src="assets/imgs/finetuning.png" alt="CoDeC scores approach 100% during finetuning across architectures">
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Properties & Analysis ===== -->
+  <section class="section" id="analysis">
+    <div class="container" style="max-width:920px;">
+      <div class="section-header fade-in-up">
+        <h2><span class="accent">Properties</span> &amp; Analysis</h2>
+        <p>Understanding the behavior, robustness, and practical characteristics of CoDeC.</p>
+      </div>
+
+      <!-- Early detection: side-by-side text + image -->
+      <div class="result-block fade-in-up" style="margin-bottom:24px;">
+        <h4>Early Detection During Training</h4>
+        <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+          <div style="flex:1;min-width:280px;">
+            <p class="result-desc" style="margin-bottom:0;">Tracking CoDeC scores across OLMo 7B training checkpoints, we find that scores reach their final values after just 2% of training (10k out of 477k steps). This enables early intervention during model development, before significant training resources are spent.</p>
           </div>
-        </div>
-        <div class="col-half">
-          <div class="result-block">
-            <h4>Contamination Transfer</h4>
-            <div style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;">
-              <img src="assets/imgs/transfer_to.png" alt="Contamination transfer to other datasets" style="flex:1;min-width:200px;">
-              <img src="assets/imgs/transfer_from.png" alt="Contamination transfer from other datasets" style="flex:1;min-width:200px;">
-              <img src="assets/imgs/transfer_legend.png" alt="Legend" style="width:130px;flex-shrink:0;">
-            </div>
-            <p class="result-caption">CoDeC detects indirect contamination from related data. Finetuning on MMLU contaminates even unseen questions. This cannot be captured by simple n-gram overlap checks.</p>
-          </div>
+          <img src="assets/imgs/training_progress.png" alt="CoDeC scores during OLMo 7B training" style="flex:1;min-width:280px;max-width:420px;border-radius:var(--radius);">
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:24px;" class="fade-in-up">
-        <a href="leaderboard/" style="color:var(--nv-green-dim);font-weight:600;text-decoration:none;font-size:0.95rem;">Explore the full contamination leaderboard &rarr;</a>
+      <!-- Per-dataset scores: full-width image -->
+      <div class="result-block fade-in-up" style="margin-bottom:24px;">
+        <h4>CoDeC Scores Depend on Data, Not Model Specifics</h4>
+        <p class="result-desc">CoDeC scores are primarily determined by the relationship between the training corpus and the target benchmark. For models trained on the same data (e.g., the Pile), scores for each dataset are narrowly distributed. This stability enables meaningful cross-model comparisons: consistent scores reflect a dataset-level property, while deviations signal model-specific memorization.</p>
+        <img src="assets/imgs/per_dataset_scores.png" alt="Distribution of CoDeC scores per dataset across models">
+        <p class="result-caption">CoDeC scores for models trained on the Pile. The last 10 datasets are parts of the training data. Scores usually cluster around a dataset-specific mean.</p>
+      </div>
+
+      <!-- Contamination transfer: two charts + legend -->
+      <div class="result-block fade-in-up" style="margin-bottom:24px;">
+        <h4>Contamination Transfer</h4>
+        <p class="result-desc">CoDeC detects indirect contamination from rephrased, augmented, or otherwise related data. The model becomes contaminated with MMLU even when trained on questions that were unseen, highly cropped, rephrased, noised, or highly related. This cannot be captured by simple n-gram overlap checks.</p>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <img src="assets/imgs/transfer_to.png" alt="Contamination transfer to other datasets" style="flex:2;min-width:200px;max-height:260px;object-fit:contain;border-radius:var(--radius);">
+          <img src="assets/imgs/transfer_from.png" alt="Contamination transfer from other datasets" style="flex:2;min-width:200px;max-height:260px;object-fit:contain;border-radius:var(--radius);">
+          <img src="assets/imgs/transfer_legend.png" alt="Legend" style="flex:1;min-width:100px;max-width:180px;max-height:260px;object-fit:contain;">
+        </div>
+      </div>
+
+      <!-- ICL mirrors finetuning: two charts side by side -->
+      <div class="result-block fade-in-up" style="margin-bottom:24px;">
+        <h4>In-Context Learning Mirrors Finetuning</h4>
+        <p class="result-desc">Adding in-context samples and finetuning with a moderate learning rate produce nearly identical confidence curves. For unseen data, both increase confidence with dimnishing gains; for training data, both decrease it in the first step, but then slowly increase it again. This pattern is due to the high variability of local minima in the loss landscape. This explains why CoDeC works: it measures the same underlying phenomenon as actual training&mdash;the remaining learning capacity for the target distribution&mdash;but at negligible computational cost.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <img src="assets/imgs/icl_vs_ft_context.png" alt="Model confidence changes with growing context" style="flex:1;min-width:240px;max-height:260px;object-fit:contain;border-radius:var(--radius);">
+          <img src="assets/imgs/icl_vs_ft_training.png" alt="Model confidence changes during finetuning" style="flex:1;min-width:240px;max-height:260px;object-fit:contain;border-radius:var(--radius);">
+        </div>
+        <p class="result-caption">Left: confidence change as in-context samples are added. Right: confidence change during finetuning at various learning rates. The curves are strikingly similar.</p>
+      </div>
+
+      <!-- Sample efficiency: side-by-side text + image -->
+      <div class="result-block fade-in-up">
+        <h4>Sample Efficiency</h4>
+        <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+          <div style="flex:1;min-width:280px;">
+            <p class="result-desc" style="margin-bottom:0;">CoDeC yields stable estimates with as few as 100 samples, and variance drops below 1% with 1,000 samples. The method requires only two forward passes per sample, is model-agnostic, dataset-agnostic, and parameter-free&mdash;no thresholds to tune, no reference models needed.</p>
+          </div>
+          <img src="assets/imgs/dataset_size.png" alt="Contamination scores remain stable with as few as 100 samples" style="flex:1;min-width:240px;max-width:360px;max-height:260px;object-fit:contain;border-radius:var(--radius);">
+        </div>
       </div>
     </div>
   </section>
@@ -325,6 +359,48 @@
             <p>Catch indirect leakage from related, augmented, or synthetically generated data&mdash;contamination that n-gram overlap checks miss.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Interpreting Scores ===== -->
+  <section class="section section-alt" id="interpreting">
+    <div class="container" style="max-width:920px;">
+      <div class="section-header fade-in-up">
+        <h2><span class="accent">Interpreting</span> CoDeC Scores</h2>
+        <p>CoDeC scores measure how strongly a model's predictions depend on memorized patterns rather than genuine reasoning.</p>
+      </div>
+
+      <div class="row" style="gap:16px 24px;">
+        <div class="col-third fade-in-up" data-delay="0">
+          <div class="why-card" style="border-top:3px solid #ef4444;">
+            <h5 style="color:#ef4444;">High (&gt;80%)</h5>
+            <p>Strong evidence of contamination. The model has likely been trained directly on this dataset or very closely related data. Benchmark results on this dataset should be interpreted with caution.</p>
+          </div>
+        </div>
+        <div class="col-third fade-in-up" data-delay="100">
+          <div class="why-card" style="border-top:3px solid #f59e0b;">
+            <h5 style="color:#d97706;">Moderate (40&ndash;80%)</h5>
+            <p>Ambiguous range. May indicate partial contamination, training on closely related data, or a low-diversity dataset. Compare across models on the same benchmark to identify outliers.</p>
+          </div>
+        </div>
+        <div class="col-third fade-in-up" data-delay="200">
+          <div class="why-card" style="border-top:3px solid var(--nv-green);">
+            <h5 style="color:var(--nv-green-dim);">Low (&lt;40%)</h5>
+            <p>No evidence of contamination. The model is likely reasoning based on general knowledge rather than memorized patterns. Benchmark results can be trusted with higher confidence.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-block fade-in-up" data-delay="300" style="margin-top:28px;">
+        <h4>Best Practices</h4>
+        <ul style="font-size:0.9rem;color:var(--text-secondary);line-height:1.8;padding-left:20px;">
+          <li><strong>Compare across models.</strong> Absolute scores are informative, but the most meaningful analysis compares a model's score against the distribution of scores from other models on the same benchmark. Outliers relative to peers are stronger signals than absolute numbers alone.</li>
+          <li><strong>Use reference models.</strong> Including at least one model known to be non-contaminated (e.g., an older model predating the benchmark) establishes a dataset-specific baseline.</li>
+          <li><strong>Consider dataset diversity.</strong> Highly diverse datasets (e.g., MMLU with many unrelated topics) may yield moderate scores even without contamination, because unrelated context acts as noise.</li>
+          <li><strong>Contamination is not inherently negative.</strong> Models designed for specific domains (e.g., math) are expected to train extensively on related data. CoDeC helps distinguish <em>how much</em> a model relies on memorized priors versus general capability.</li>
+        </ul>
       </div>
     </div>
   </section>
