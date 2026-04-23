@@ -9214,22 +9214,22 @@
       "score": 0.7210391822827938
     },
     {
-      "model": "MiniMax-M2.7",
+      "model": "MiniMaxAI/MiniMax-M2.7",
       "benchmark": "openai_humaneval",
       "score": 0.16666
     },
     {
-      "model": "MiniMax-M2.7",
+      "model": "MiniMaxAI/MiniMax-M2.7",
       "benchmark": "lcr",
       "score": 0.5054945
     },
     {
-      "model": "MiniMax-M2.7",
+      "model": "MiniMaxAI/MiniMax-M2.7",
       "benchmark": "taubench",
       "score": 0.26573426
     },
     {
-      "model": "MiniMax-M2.7",
+      "model": "MiniMaxAI/MiniMax-M2.7",
       "benchmark": "hellaswag_test",
       "score": 0.1060430655
     }
