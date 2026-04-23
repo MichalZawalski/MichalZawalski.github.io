@@ -292,7 +292,7 @@
       </div>
 
       <!-- Sample efficiency: side-by-side text + image -->
-      <div class="result-block fade-in-up">
+      <div class="result-block fade-in-up" style="margin-bottom:24px;">
         <h4>Sample Efficiency</h4>
         <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
           <div style="flex:1;min-width:280px;">
@@ -300,6 +300,12 @@
           </div>
           <img src="assets/imgs/dataset_size.png" alt="Contamination scores remain stable with as few as 100 samples" style="flex:1;min-width:240px;max-width:360px;max-height:260px;object-fit:contain;border-radius:var(--radius);">
         </div>
+      </div>
+
+      <!-- Verifying decontamination claims -->
+      <div class="result-block fade-in-up">
+        <h4>Verifying Decontamination Claims</h4>
+        <p class="result-desc">CoDeC can independently verify decontamination procedures described in technical reports. For example, Qwen 2.5 scores 100% contamination on GSM8K's training set but only 27% on the test set. According to its technical report, training set of GSM8K was deliberately included in training, but with questions overlapping the test set removed. CoDeC confirms both the deliberate inclusion and the successful decontamination&mdash;without requiring access to the training data or any prior knowledge of the data curation process.</p>
       </div>
     </div>
   </section>
