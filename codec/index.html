@@ -402,10 +402,12 @@
       <div class="result-block fade-in-up" data-delay="300" style="margin-top:28px;">
         <h4>Best Practices</h4>
         <ul style="font-size:0.9rem;color:var(--text-secondary);line-height:1.8;padding-left:20px;">
-          <li><strong>Compare across models.</strong> Absolute scores are informative, but the most meaningful analysis compares a model's score against the distribution of scores from other models on the same benchmark. Outliers relative to peers are stronger signals than absolute numbers alone.</li>
-          <li><strong>Use reference models.</strong> Including at least one model known to be non-contaminated (e.g., an older model predating the benchmark) establishes a dataset-specific baseline.</li>
+          <li><strong>Compare across models.</strong> Absolute scores are informative, but the most meaningful analysis compares a model's score against the distribution from other models on the same benchmark. Outliers relative to peers are stronger signals than absolute numbers alone.</li>
+          <li><strong>Use reference models.</strong> Including at least one model known to be non-contaminated (e.g., an older model predating the benchmark) establishes a dataset-specific baseline. Prefer models of similar size.</li>
           <li><strong>Consider dataset diversity.</strong> Highly diverse datasets (e.g., MMLU with many unrelated topics) may yield moderate scores even without contamination, because unrelated context acts as noise.</li>
-          <li><strong>Contamination is not inherently negative.</strong> Models designed for specific domains (e.g., math) are expected to train extensively on related data. CoDeC helps distinguish <em>how much</em> a model relies on memorized priors versus general capability.</li>
+          <li><strong>Choose what to evaluate carefully.</strong> Use only the parts of a benchmark known to appear during training (typically just the questions, not evaluation-specific labels or templates). Arbitrary formatting choices&mdash;such as answer labels, instruction prompts, etc.&mdash;can significantly bias scores if they weren't part of the original training data.</li>
+          <li><strong>CoDeC measures familiarity.</strong> A high score doesn't necessarily mean inflated accuracy&mdash;the model may recognize the question format without having seen the answers, or specific details (like numbers used) may differ from training examples.</li>
+          <li><strong>Contamination is not inherently negative.</strong> A high contamination score on a benchmark means that accuracy on that benchmark may not generalize to other tasks. The model itself may still be highly capable&mdash;but its performance on that specific benchmark should not be taken as evidence of broader ability.</li>
         </ul>
       </div>
     </div>
@@ -417,7 +419,7 @@
     <div class="container">
       <div class="section-header fade-in-up">
         <h2><span class="accent">Contamination</span> Leaderboard</h2>
-        <p>We evaluated 40+ recent models across 20+ popular benchmarks. Explore the full results interactively.</p>
+        <p>We evaluated 60+ recent models across 20+ popular benchmarks. Explore the full results interactively.</p>
       </div>
 
       <div class="teaser-wrapper fade-in-up" data-delay="200">
