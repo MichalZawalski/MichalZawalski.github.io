@@ -277,7 +277,7 @@ body {
 #table-container td.model-cell {
   position: sticky;
   left: 0;
-  z-index: 2;
+  z-index: 4;
   background: var(--bg-white);
   text-align: left;
   width: auto;
@@ -292,7 +292,7 @@ body {
 }
 #table-container th.model-header {
   background: var(--bg-surface);
-  z-index: 3;
+  z-index: 5;
   color: var(--text-secondary);
   font-weight: 600;
   text-transform: uppercase;
@@ -321,6 +321,7 @@ body {
   z-index: 2;
   white-space: nowrap;
   border-right: 2px solid var(--border);
+  background: var(--bg-white);
 }
 #table-container th.avg-header {
   z-index: 3;
