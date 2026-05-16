@@ -550,7 +550,7 @@
   <!-- Progress bar -->
   <div id="progress-bar-wrap">
     <div class="progress-meta">
-      <span id="progress-label">Question 1 of 31</span>
+      <span id="progress-label">Question 1 of 32</span>
       <span id="progress-score">Score: 0</span>
     </div>
     <div class="progress-track">
@@ -642,7 +642,7 @@
         <div class="score-circle" id="score-circle">
           <div class="score-circle-inner">
             <div class="score-number" id="score-num">0</div>
-            <div class="score-denom" id="score-denom">/ 31</div>
+            <div class="score-denom" id="score-denom">/ 32</div>
           </div>
         </div>
         <h2 id="results-title">Your Results</h2>
@@ -682,31 +682,11 @@
 </div><!-- /page-wrap -->
 
 <script>
-  let questions = [];
+  let questions = null;
   let shuffled = [];
   let current = 0;
   let score = 0;
   let results = [];
-
-  async function loadQuiz() {
-    const resp = await fetch('../../assets/other/quiz.xml');
-    const text = await resp.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'application/xml');
-    questions = Array.from(doc.querySelectorAll('question')).map(q => {
-      const answers = q.querySelector('answers');
-      const correct = answers.getAttribute('correct');
-      const opts = ['a','b','c'].map(k => ({
-        key: k,
-        text: answers.querySelector(k)?.getAttribute('en') || ''
-      }));
-      return {
-        question: q.querySelector('en')?.textContent || '',
-        options: opts,
-        correct
-      };
-    });
-  }
 
   function shuffle(arr) {
     const a = [...arr];
@@ -718,7 +698,15 @@
   }
 
   async function startQuiz() {
-    if (questions.length === 0) await loadQuiz();
+    if (!questions) {
+      try {
+        const resp = await fetch('questions.json');
+        questions = await resp.json();
+      } catch (e) {
+        alert('Failed to load questions. Please reload the page.');
+        return;
+      }
+    }
     shuffled = shuffle(questions);
     current = 0;
     score = 0;
@@ -900,9 +888,6 @@
     document.getElementById('screen-results').style.display = 'none';
     startQuiz();
   }
-
-  // Pre-load XML in background
-  loadQuiz();
 </script>
 
 </body>
