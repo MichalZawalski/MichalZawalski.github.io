@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Contamination Quiz — CoDeC</title>
+  <meta name="description" content="Can you answer trivia questions without seeing them? Test whether answer options alone are enough to guess correctly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <style>
+    :root {
+      --nv-green: #76b900;
+      --nv-green-dim: #5a8f00;
+      --nv-green-bg: rgba(118, 185, 0, 0.10);
+      --bg-base: #f5f5f5;
+      --bg-white: #fff;
+      --bg-dark: #1a1a1a;
+      --bg-dark-surface: #242424;
+      --border: #e0e0e0;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #888;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
+      --shadow-md: 0 2px 10px rgba(0,0,0,0.09);
+      --shadow-lg: 0 6px 28px rgba(0,0,0,0.12);
+      --radius: 10px;
+      --radius-lg: 16px;
+      --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --correct: #2e7d32;
+      --correct-bg: #e8f5e9;
+      --wrong: #c62828;
+      --wrong-bg: #ffebee;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ===== Topbar ===== */
+    #topbar {
+      background: var(--bg-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .topbar-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .topbar-sep { color: #555; }
+    .topbar-subtitle {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+    .topbar-links {
+      margin-left: auto;
+      display: flex;
+      gap: 20px;
+    }
+    .topbar-links a {
+      font-size: 0.8rem;
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .topbar-links a:hover { color: var(--nv-green); }
+
+    /* ===== Main layout ===== */
+    .page-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ===== Progress bar ===== */
+    #progress-bar-wrap {
+      display: none;
+      margin-bottom: 28px;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .progress-track {
+      height: 5px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--nv-green);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    /* ===== Cards ===== */
+    .card {
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 36px 36px;
+      transition: box-shadow 0.2s;
+    }
+    @media (max-width: 480px) {
+      .card { padding: 24px 20px; }
+    }
+
+    /* ===== Intro screen ===== */
+    #screen-intro .card-badge {
+      display: inline-block;
+      background: var(--nv-green-bg);
+      color: var(--nv-green-dim);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    #screen-intro h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    #screen-intro h1 span { color: var(--nv-green); }
+    #screen-intro .tagline {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      line-height: 1.65;
+    }
+    .how-it-works {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 28px;
+    }
+    .how-it-works h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--nv-green);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .hypothesis-box {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      color: #fff;
+    }
+    .hypothesis-box .label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--nv-green);
+      margin-bottom: 6px;
+    }
+    .hypothesis-box p {
+      font-size: 0.92rem;
+      color: #ccc;
+      line-height: 1.55;
+    }
+    .hypothesis-box strong { color: #fff; }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--nv-green);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--nv-green-dim);
+      box-shadow: 0 4px 16px rgba(118,185,0,0.35);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-full { width: 100%; }
+    .btn-outline {
+      background: transparent;
+      color: var(--nv-green-dim);
+      border: 2px solid var(--nv-green);
+    }
+    .btn-outline:hover {
+      background: var(--nv-green-bg);
+    }
+
+    /* ===== Quiz screen ===== */
+    #screen-quiz { display: none; }
+    .phase-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .phase-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--nv-green);
+      animation: pulse-dot 1.5s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Blind mode: only answers visible */
+    .blind-prompt {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .blind-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    /* Answer options */
+    .options { display: flex; flex-direction: column; gap: 12px; }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--nv-green);
+      background: var(--nv-green-bg);
+      transform: translateX(3px);
+    }
+    .option-btn:active:not(:disabled) { transform: translateX(1px); }
+    .option-btn:disabled { cursor: default; }
+
+    .option-letter {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      color: var(--text-secondary);
+      font-weight: 700;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .option-btn:hover:not(:disabled) .option-letter {
+      background: var(--nv-green);
+      color: #fff;
+    }
+
+    /* Reveal states */
+    .option-btn.correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+    }
+    .option-btn.correct .option-letter {
+      background: var(--correct);
+      color: #fff;
+    }
+    .option-btn.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-bg);
+    }
+    .option-btn.wrong .option-letter {
+      background: var(--wrong);
+      color: #fff;
+    }
+    .option-btn.neutral {
+      opacity: 0.5;
+    }
+
+    /* Reveal section */
+    #reveal-section {
+      display: none;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .reveal-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+    .verdict {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      margin-bottom: 22px;
+    }
+    .verdict.correct-verdict {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border: 1px solid #a5d6a7;
+    }
+    .verdict.wrong-verdict {
+      background: var(--wrong-bg);
+      color: var(--wrong);
+      border: 1px solid #ef9a9a;
+    }
+    .verdict-icon { font-size: 1.2rem; }
+
+    #btn-next { margin-top: 4px; }
+
+    /* ===== Results screen ===== */
+    #screen-results { display: none; }
+    .results-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: conic-gradient(var(--nv-green) var(--pct), #e0e0e0 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+    .score-circle-inner {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .score-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+    .score-denom {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .results-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .results-header .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 420px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    .insight-box {
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 24px;
+    }
+    .insight-box.dark {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      color: #ccc;
+    }
+    .insight-box.dark .insight-title { color: var(--nv-green); }
+    .insight-box.light {
+      background: var(--nv-green-bg);
+      border: 1px solid rgba(118,185,0,0.25);
+    }
+    .insight-box.light .insight-title { color: var(--nv-green-dim); }
+    .insight-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .insight-box p {
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .insight-box strong { color: inherit; font-weight: 600; }
+
+    .review-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .review-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 0.85rem;
+    }
+    .review-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .review-q { font-weight: 600; color: var(--text-primary); margin-bottom: 2px; font-size: 0.82rem; }
+    .review-a { color: var(--text-muted); font-size: 0.8rem; }
+    .review-a span { font-weight: 600; }
+    .review-a .your-ans { color: var(--wrong); }
+    .review-a .correct-ans { color: var(--correct); }
+
+    .results-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .results-actions .btn { flex: 1; min-width: 140px; }
+
+    /* ===== Animations ===== */
+    .fade-in {
+      animation: fadeIn 0.4s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 480px) {
+      #screen-intro h1 { font-size: 1.4rem; }
+      .results-header h2 { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== Topbar ===== -->
+<nav id="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-brand" href="../">
+      <img src="../favicon.svg" width="24" height="24" alt="CoDeC">
+      <span class="topbar-title">CoDeC</span>
+    </a>
+    <span class="topbar-sep">|</span>
+    <span class="topbar-subtitle">The Contamination Quiz</span>
+    <div class="topbar-links">
+      <a href="../">Project</a>
+      <a href="../leaderboard/">Leaderboard</a>
+      <a href="https://arxiv.org/abs/2510.27055" target="_blank">Paper</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Page ===== -->
+<div class="page-wrap">
+
+  <!-- Progress bar -->
+  <div id="progress-bar-wrap">
+    <div class="progress-meta">
+      <span id="progress-label">Question 1 of 31</span>
+      <span id="progress-score">Score: 0</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: Intro ===== -->
+  <div id="screen-intro">
+    <div class="card fade-in">
+      <div class="card-badge">Research Experiment</div>
+      <h1>Can You Answer Without the <span>Question</span>?</h1>
+      <p class="tagline">
+        A common claim in AI research is: if a model answers correctly without seeing the question,
+        it <em>must</em> have memorized the answer during training. But is that really true?
+        Many multiple-choice answers are self-evident — no question needed.
+      </p>
+
+      <div class="hypothesis-box">
+        <div class="label">The Hypothesis</div>
+        <p>
+          <strong>Seeing only the answer options</strong> is often enough to pick the right one —
+          without any question context. This means high "blind" accuracy is <strong>not necessarily
+          evidence of data contamination</strong>.
+        </p>
+      </div>
+
+      <div class="how-it-works">
+        <h3>How it works</h3>
+        <ul class="steps">
+          <li>
+            <span class="step-num">1</span>
+            <span>You'll see <strong>only three answer options</strong> — no question.</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span>Pick whichever option you think is correct.</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span>The question is then revealed along with the correct answer.</span>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <span>At the end, see your total score and what it means.</span>
+          </li>
+        </ul>
+      </div>
+
+      <button class="btn btn-primary btn-full" id="btn-start" onclick="startQuiz()">
+        Start the Quiz &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: Quiz ===== -->
+  <div id="screen-quiz">
+    <div class="card fade-in" id="quiz-card">
+      <div class="phase-label">
+        <span class="phase-dot"></span>
+        Choose without the question
+      </div>
+
+      <p class="blind-prompt">Which option is correct?</p>
+      <p class="blind-sub">Pick based solely on the answer choices below.</p>
+
+      <div class="options" id="options-container">
+        <!-- injected by JS -->
+      </div>
+
+      <div id="reveal-section">
+        <div class="reveal-label">The Question Was&hellip;</div>
+        <div class="question-text" id="question-text"></div>
+        <div class="verdict" id="verdict-box">
+          <span class="verdict-icon" id="verdict-icon"></span>
+          <span id="verdict-text"></span>
+        </div>
+        <button class="btn btn-primary btn-full" id="btn-next" onclick="nextQuestion()">
+          Next Question &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: Results ===== -->
+  <div id="screen-results">
+    <div class="card fade-in">
+      <div class="results-header">
+        <div class="score-circle" id="score-circle">
+          <div class="score-circle-inner">
+            <div class="score-number" id="score-num">0</div>
+            <div class="score-denom" id="score-denom">/ 31</div>
+          </div>
+        </div>
+        <h2 id="results-title">Your Results</h2>
+        <p class="subtitle" id="results-subtitle"></p>
+      </div>
+
+      <div class="insight-box dark" id="insight-main">
+        <div class="insight-title">What does this mean?</div>
+        <p id="insight-text"></p>
+      </div>
+
+      <div class="insight-box light">
+        <div class="insight-title">The Research Point</div>
+        <p>
+          This demonstrates why <strong>blind answer selection accuracy</strong> cannot be used alone
+          as a contamination signal. A model that "knows" the right answer might simply be reasoning
+          from plausible-sounding options — just as you did. Our paper, <em>CoDeC</em>, uses a more
+          robust method based on how in-context examples shift model confidence.
+          <a href="https://arxiv.org/abs/2510.27055" target="_blank" style="color:var(--nv-green-dim);font-weight:600;">Read the paper →</a>
+        </p>
+      </div>
+
+      <details style="margin-bottom:24px;">
+        <summary style="cursor:pointer;font-size:0.85rem;font-weight:600;color:var(--text-secondary);padding:4px 0;">
+          Review answers
+        </summary>
+        <div class="review-list" id="review-list" style="margin-top:14px;"></div>
+      </details>
+
+      <div class="results-actions">
+        <button class="btn btn-primary" onclick="restartQuiz()">Play Again</button>
+        <a class="btn btn-outline" href="../" >Learn About CoDeC</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+  let questions = [];
+  let shuffled = [];
+  let current = 0;
+  let score = 0;
+  let results = [];
+
+  async function loadQuiz() {
+    const resp = await fetch('../../assets/other/quiz.xml');
+    const text = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'application/xml');
+    questions = Array.from(doc.querySelectorAll('question')).map(q => {
+      const answers = q.querySelector('answers');
+      const correct = answers.getAttribute('correct');
+      const opts = ['a','b','c'].map(k => ({
+        key: k,
+        text: answers.querySelector(k)?.getAttribute('en') || ''
+      }));
+      return {
+        question: q.querySelector('en')?.textContent || '',
+        options: opts,
+        correct
+      };
+    });
+  }
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  async function startQuiz() {
+    if (questions.length === 0) await loadQuiz();
+    shuffled = shuffle(questions);
+    current = 0;
+    score = 0;
+    results = [];
+
+    document.getElementById('screen-intro').style.display = 'none';
+    document.getElementById('screen-results').style.display = 'none';
+    document.getElementById('screen-quiz').style.display = 'block';
+    document.getElementById('progress-bar-wrap').style.display = 'block';
+
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = shuffled[current];
+    const total = shuffled.length;
+
+    // Progress
+    document.getElementById('progress-label').textContent = `Question ${current + 1} of ${total}`;
+    document.getElementById('progress-score').textContent = `Score: ${score}`;
+    document.getElementById('progress-fill').style.width = `${(current / total) * 100}%`;
+
+    // Hide reveal
+    document.getElementById('reveal-section').style.display = 'none';
+    document.getElementById('question-text').textContent = '';
+
+    // Render options
+    const container = document.getElementById('options-container');
+    container.innerHTML = '';
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.dataset.key = opt.key;
+      btn.innerHTML = `<span class="option-letter">${opt.key.toUpperCase()}</span><span>${opt.text}</span>`;
+      btn.onclick = () => selectAnswer(opt.key);
+      container.appendChild(btn);
+    });
+
+    // Animate card
+    const card = document.getElementById('quiz-card');
+    card.classList.remove('fade-in');
+    void card.offsetWidth;
+    card.classList.add('fade-in');
+  }
+
+  function selectAnswer(chosen) {
+    const q = shuffled[current];
+    const correct = q.correct;
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+
+    results.push({ q, chosen, isCorrect });
+
+    // Style options
+    document.querySelectorAll('.option-btn').forEach(btn => {
+      btn.disabled = true;
+      const key = btn.dataset.key;
+      if (key === correct) {
+        btn.classList.add('correct');
+      } else if (key === chosen && !isCorrect) {
+        btn.classList.add('wrong');
+      } else {
+        btn.classList.add('neutral');
+      }
+    });
+
+    // Show reveal
+    document.getElementById('question-text').textContent = q.question;
+
+    const verdictBox = document.getElementById('verdict-box');
+    const verdictIcon = document.getElementById('verdict-icon');
+    const verdictText = document.getElementById('verdict-text');
+
+    if (isCorrect) {
+      verdictBox.className = 'verdict correct-verdict';
+      verdictIcon.textContent = '✓';
+      verdictText.textContent = 'Correct! You picked the right answer without even seeing the question.';
+    } else {
+      const correctText = q.options.find(o => o.key === correct).text;
+      verdictBox.className = 'verdict wrong-verdict';
+      verdictIcon.textContent = '✗';
+      verdictText.textContent = `Incorrect. The right answer was: "${correctText}"`;
+    }
+
+    const revealSection = document.getElementById('reveal-section');
+    revealSection.style.display = 'block';
+    revealSection.style.animation = 'none';
+    void revealSection.offsetWidth;
+    revealSection.style.animation = 'fadeIn 0.35s ease forwards';
+
+    // Update btn label
+    const btnNext = document.getElementById('btn-next');
+    btnNext.textContent = current + 1 < shuffled.length ? 'Next Question →' : 'See Results →';
+
+    // Update score in progress
+    document.getElementById('progress-score').textContent = `Score: ${score}`;
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current >= shuffled.length) {
+      showResults();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showResults() {
+    document.getElementById('screen-quiz').style.display = 'none';
+    document.getElementById('progress-bar-wrap').style.display = 'none';
+    document.getElementById('screen-results').style.display = 'block';
+
+    const total = shuffled.length;
+    const pct = Math.round((score / total) * 100);
+    const chance = 33;
+
+    // Score circle
+    document.getElementById('score-circle').style.setProperty('--pct', `${pct}%`);
+    document.getElementById('score-num').textContent = score;
+    document.getElementById('score-denom').textContent = `/ ${total}`;
+
+    // Title & subtitle
+    let title, subtitle;
+    if (pct >= 75) {
+      title = 'Impressive! You barely needed the questions.';
+      subtitle = `${pct}% accuracy — well above random chance (33%). The answer options alone carried a lot of information.`;
+    } else if (pct >= 50) {
+      title = 'Solid! The options helped more than you might expect.';
+      subtitle = `${pct}% accuracy — clearly above random (33%). You extracted real signal from the choices alone.`;
+    } else if (pct >= 33) {
+      title = 'About what chance would predict.';
+      subtitle = `${pct}% accuracy — near random chance (33%). These questions needed their context.`;
+    } else {
+      title = 'The questions were truly necessary here.';
+      subtitle = `${pct}% accuracy — below random chance (33%). Tough questions where the options gave few clues.`;
+    }
+    document.getElementById('results-title').textContent = title;
+    document.getElementById('results-subtitle').textContent = subtitle;
+
+    // Insight
+    const above = pct - chance;
+    let insight;
+    if (above >= 30) {
+      insight = `You scored <strong>${pct}%</strong> — a <strong>${above} point</strong> lift above random (33%). This is strong evidence that the answer choices themselves were highly informative. For a language model, this means that high blind-selection accuracy on these questions would be misleading as a contamination signal: the model could be "right" by reasoning from options alone, not by memorizing the data.`;
+    } else if (above >= 10) {
+      insight = `You scored <strong>${pct}%</strong> — a modest <strong>${above} point</strong> lift above random (33%). Even without question context, the options offered useful signal. This suggests that using blind accuracy as a contamination proxy would produce false positives on this quiz.`;
+    } else {
+      insight = `You scored <strong>${pct}%</strong>, close to random chance (33%). These particular questions needed their context to be answerable — which means blind accuracy <em>would</em> be a more reliable signal here. But across a full benchmark with diverse question types, that reliability doesn't hold.`;
+    }
+    document.getElementById('insight-text').innerHTML = insight;
+
+    // Review list
+    const list = document.getElementById('review-list');
+    list.innerHTML = '';
+    results.forEach(r => {
+      const chosenText = r.q.options.find(o => o.key === r.chosen).text;
+      const correctText = r.q.options.find(o => o.key === r.q.correct).text;
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      item.innerHTML = `
+        <span class="review-icon">${r.isCorrect ? '✓' : '✗'}</span>
+        <div>
+          <div class="review-q">${r.q.question}</div>
+          <div class="review-a">
+            ${r.isCorrect
+              ? `You picked: <span class="correct-ans">${chosenText}</span> ✓`
+              : `You picked: <span class="your-ans">${chosenText}</span> &nbsp;·&nbsp; Correct: <span class="correct-ans">${correctText}</span>`
+            }
+          </div>
+        </div>`;
+      list.appendChild(item);
+    });
+
+    // Scroll top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function restartQuiz() {
+    document.getElementById('screen-results').style.display = 'none';
+    startQuiz();
+  }
+
+  // Pre-load XML in background
+  loadQuiz();
+</script>
+
+</body>
+</html>

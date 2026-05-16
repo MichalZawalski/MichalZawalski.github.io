@@ -1,0 +1,323 @@
+<quiz>
+
+  <question>
+    <pl>Czy Ziemia jest regularną kulą?</pl>
+    <en>Is the Earth a perfect sphere?</en>
+    <answers>
+      <a pl="tak, przecież mówi się "kula ziemska"" en="yes, after all it is called the globe"/>
+      <b pl="tak, dowiódł tego Magellan" en="yes, Magellan proved it"/>
+      <c pl="nie, jest geoidą" en="no, it is a geoid"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Skąd pochodzi nazwa Ameryka?</pl>
+    <en>Where does the name America come from?</en>
+    <answers>
+      <a pl="od imienia Amerigo Vespucciego" en="from the name of Amerigo Vespucci"/>
+      <b pl="od plemienia Indian amerykańskich" en="from a Native American tribe"/>
+      <c pl="od imienia żony Krzysztofa Kolumba" en="from the name of Christopher Columbus's wife"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Jak nazywa się najwyższy szczyt Ameryki Północnej?</pl>
+    <en>What is the highest peak in North America?</en>
+    <answers>
+      <a pl="McKinley" en="McKinley"/>
+      <b pl="Orizaba" en="Orizaba"/>
+      <c pl="Elbert" en="Elbert"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Długość równika wynosi około:</pl>
+    <en>The length of the equator is approximately:</en>
+    <answers>
+      <a pl="40 000 km" en="40,000 km"/>
+      <b pl="20 000 km" en="20,000 km"/>
+      <c pl="10 000 km" en="10,000 km"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Nazwa "gejzer" pochodzi od:</pl>
+    <en>The name "geyser" comes from:</en>
+    <answers>
+      <a pl="nazwy gejzeru Stóri Geysir na Islandii" en="the name of the geyser Stóri Geysir in Iceland"/>
+      <b pl="nazwiska jego odkrywcy" en="the surname of its discoverer"/>
+      <c pl="nikt nie wie, skąd pochodzi ta nazwa" en="no one knows where the name comes from"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Ziemia Ognista to:</pl>
+    <en>Tierra del Fuego is:</en>
+    <answers>
+      <a pl="miejsce palenia świętego ognia Indian" en="a place where Native Americans kept a sacred fire"/>
+      <b pl="wyspa u południowych krańców Ameryki Południowej" en="an island at the southern tip of South America"/>
+      <c pl="miejsce występowania źródeł gorącej wody" en="a place with hot springs"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Najgłębsze miejsce w oceanie ma 11 034 m poniżej poziomu morza i zanotowano je w Rowie:</pl>
+    <en>The deepest place in the ocean is 11,034 m below sea level and was recorded in the:</en>
+    <answers>
+      <a pl="Rowie Tonga" en="Tonga Trench"/>
+      <b pl="Rowie Mariańskim" en="Mariana Trench"/>
+      <c pl="Rowie Bonin" en="Bonin Trench"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Jak nazywa się największe jezioro Ameryki Północnej?</pl>
+    <en>What is the largest lake in North America?</en>
+    <answers>
+      <a pl="Górne" en="Superior"/>
+      <b pl="Michigan" en="Michigan"/>
+      <c pl="Huron" en="Huron"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Największy park narodowy Stanów Zjednoczonych to:</pl>
+    <en>The largest national park in the United States is:</en>
+    <answers>
+      <a pl="Youngstown" en="Youngstown"/>
+      <b pl="Yellowstone" en="Yellowstone"/>
+      <c pl="Cheyenne" en="Cheyenne"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>W jakim morzu nie można się utopić ze względu na bardzo wysokie zasolenie?</pl>
+    <en>In which sea is it impossible to drown due to very high salinity?</en>
+    <answers>
+      <a pl="w Morzu Martwym" en="in the Dead Sea"/>
+      <b pl="w Morzu Marmara" en="in the Sea of Marmara"/>
+      <c pl="w Morzu Czarnym" en="in the Black Sea"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Jaki zwrotnik przechodzi przez Australię?</pl>
+    <en>Which tropic passes through Australia?</en>
+    <answers>
+      <a pl="Zwrotnik Raka" en="Tropic of Cancer"/>
+      <b pl="Zwrotnik Koziorożca" en="Tropic of Capricorn"/>
+      <c pl="Zwrotnik Kangura" en="Tropic of Kangaroo"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Gmach opery w kształcie żaglowca znajduje się w:</pl>
+    <en>The sail-shaped opera house building is located in:</en>
+    <answers>
+      <a pl="Melbourne" en="Melbourne"/>
+      <b pl="Sydney" en="Sydney"/>
+      <c pl="Perth" en="Perth"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Waszyngton, stolica Stanów Zjednoczonych, leży w:</pl>
+    <en>Washington, the capital of the United States, is located in:</en>
+    <answers>
+      <a pl="stanie Kalifornia" en="the state of California"/>
+      <b pl="stanie Waszyngton" en="the state of Washington"/>
+      <c pl="Dystrykcie Kolumbii" en="the District of Columbia"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Stolicą Kanady jest:</pl>
+    <en>The capital of Canada is:</en>
+    <answers>
+      <a pl="Montreal" en="Montreal"/>
+      <b pl="Toronto" en="Toronto"/>
+      <c pl="Ottawa" en="Ottawa"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Które z tych akwenów nazywanych morzem jest nim rzeczywiście?</pl>
+    <en>Which of these bodies of water called a sea is actually a sea?</en>
+    <answers>
+      <a pl="Morze Martwe" en="Dead Sea"/>
+      <b pl="Morze Kaspijskie" en="Caspian Sea"/>
+      <c pl="Morze Marmara" en="Sea of Marmara"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Największy ocean to:</pl>
+    <en>The largest ocean is:</en>
+    <answers>
+      <a pl="Ocean Atlantycki" en="Atlantic Ocean"/>
+      <b pl="Ocean Spokojny" en="Pacific Ocean"/>
+      <c pl="Ocean Indyjski" en="Indian Ocean"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Co to jest tsunami?</pl>
+    <en>What is a tsunami?</en>
+    <answers>
+      <a pl="fala morska pochodzenia tektonicznego" en="a sea wave of tectonic origin"/>
+      <b pl="archipelag wysp japońskich" en="an archipelago of Japanese islands"/>
+      <c pl="chińska nazwa rafy koralowej" en="a Chinese name for a coral reef"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Co to jest biały karzeł?</pl>
+    <en>What is a white dwarf?</en>
+    <answers>
+      <a pl="wódz plemienia eskimoskiego" en="a chief of an Eskimo tribe"/>
+      <b pl="topniejący bałwan" en="a melting snowman"/>
+      <c pl="jedna z faz życia gwiazdy" en="one of the stages in a star's life"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Długość geograficzna może być:</pl>
+    <en>Longitude can be:</en>
+    <answers>
+      <a pl="długa lub krótka" en="long or short"/>
+      <b pl="wschodnia lub zachodnia" en="eastern or western"/>
+      <c pl="południowa lub północna" en="southern or northern"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Drugi po Chinach najludniejszy naród świata to:</pl>
+    <en>The second most populous nation after China is:</en>
+    <answers>
+      <a pl="Rosjanie" en="Russians"/>
+      <b pl="Hindusi" en="Indians"/>
+      <c pl="Pakistańczycy" en="Pakistanis"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Najgłębsze (1741 m) jezioro świata to:</pl>
+    <en>The deepest lake in the world (1,741 m) is:</en>
+    <answers>
+      <a pl="Jezioro Aralskie" en="Aral Sea"/>
+      <b pl="Jezioro Bałchasz" en="Lake Balkhash"/>
+      <c pl="Jezioro Bajkał" en="Lake Baikal"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Pumeks to:</pl>
+    <en>Pumice is:</en>
+    <answers>
+      <a pl="wytwór organizmów morskich" en="a product of marine organisms"/>
+      <b pl="pienista skała wulkaniczna" en="a foamy volcanic rock"/>
+      <c pl="odmiana skały pochodzenia organicznego" en="a type of rock of organic origin"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Czarna dziura to:</pl>
+    <en>A black hole is:</en>
+    <answers>
+      <a pl="zagłębienie w ziemi" en="a depression in the ground"/>
+      <b pl="końcowa faza życia gwiazdy" en="the final stage of a star's life"/>
+      <c pl="największa depresja" en="the largest depression"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>W jakich skałach zachodzą zjawiska krasowe?</pl>
+    <en>In which rocks do karst phenomena occur?</en>
+    <answers>
+      <a pl="w bazaltach" en="in basalts"/>
+      <b pl="w wapieniach" en="in limestones"/>
+      <c pl="w granitach" en="in granites"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Co ile lat jest rok przestępny?</pl>
+    <en>How often does a leap year occur?</en>
+    <answers>
+      <a pl="co 4 lata" en="every 4 years"/>
+      <b pl="co 8 lat" en="every 8 years"/>
+      <c pl="co 5 lat" en="every 5 years"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Ujścia rzeki mogą być:</pl>
+    <en>River mouths can be:</en>
+    <answers>
+      <a pl="otwarte lub zamknięte" en="open or closed"/>
+      <b pl="lejkowate lub deltowate" en="estuary-shaped or delta-shaped"/>
+      <c pl="szerokie lub wąskie" en="wide or narrow"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Najbardziej zasolone morze na Ziemi to:</pl>
+    <en>The saltiest sea on Earth is:</en>
+    <answers>
+      <a pl="Morze Marmara" en="Sea of Marmara"/>
+      <b pl="Morze Bałtyckie" en="Baltic Sea"/>
+      <c pl="Morze Martwe" en="Dead Sea"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Czym zajmuje się meteorologia?</pl>
+    <en>What does meteorology study?</en>
+    <answers>
+      <a pl="pogodą i klimatem" en="weather and climate"/>
+      <b pl="meteorytami" en="meteorites"/>
+      <c pl="historią Ziemi" en="the history of the Earth"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Co to jest chmura?</pl>
+    <en>What is a cloud?</en>
+    <answers>
+      <a pl="skroplona lub zamrożona para wodna" en="condensed or frozen water vapor"/>
+      <b pl="dym z zagłębi przemysłowych" en="smoke from industrial regions"/>
+      <c pl="efekt działania dziury ozonowej" en="an effect of the ozone hole"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Najdłuższy kanał śródlądowy świata ma długość 1782 km i jest to:</pl>
+    <en>The longest inland canal in the world is 1,782 km long and it is:</en>
+    <answers>
+      <a pl="Kanał Białomorski" en="White Sea Canal"/>
+      <b pl="Wielki Kanał Cesarski" en="Grand Canal"/>
+      <c pl="Kanał Welland" en="Welland Canal"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Rzeka główna to taka, która:</pl>
+    <en>A main river is one that:</en>
+    <answers>
+      <a pl="wpada do morza lub oceanu" en="flows into a sea or ocean"/>
+      <b pl="ma najszersze ujście" en="has the widest mouth"/>
+      <c pl="przepływa przez stolicę" en="flows through the capital"/>
+    </answers>
+  </question>
+
+  <question>
+    <pl>Naukowa nazwa soli kamiennej to:</pl>
+    <en>The scientific name of rock salt is:</en>
+    <answers>
+      <a pl="marmur" en="marble"/>
+      <b pl="hematyt" en="hematite"/>
+      <c pl="halit" en="halite"/>
+    </answers>
+  </question>
+
+</quiz>
