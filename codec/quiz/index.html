@@ -566,7 +566,8 @@
       <p class="tagline">
         A common claim in AI research is: if a model answers correctly without seeing the question,
         it <em>must</em> have memorized the answer during training. But is that really true?
-        Many multiple-choice answers are self-evident — no question needed.
+        These are <strong>primary school geography questions</strong> — yet many are answerable
+        from the options alone, no question needed.
       </p>
 
       <div class="hypothesis-box">
@@ -596,6 +597,24 @@
           <li>
             <span class="step-num">4</span>
             <span>At the end, see your total score and what it means.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="how-it-works" style="margin-bottom:28px;">
+        <h3>Tactics</h3>
+        <ul class="steps">
+          <li>
+            <span class="step-num" style="background:#555;">&#9679;</span>
+            <span><strong>Spot the standout.</strong> Which option is the most famous or extreme?<br><em>Example: ("Nile River", "Congo River", "Niger River" → pick Nile — it's the longest and most iconic.)</em></span>
+          </li>
+          <li>
+            <span class="step-num" style="background:#555;">&#9679;</span>
+            <span><strong>Reverse-engineer the question.</strong> For each option, ask: what question would make this the right answer? Do the others look like natural distractors for it?<br><em>Example: ("Hindus", "Indians", "Chinese" → "Hindus" are the native people of India, the others are classic distractors.)</em></span>
+          </li>
+          <li>
+            <span class="step-num" style="background:#555;">&#9679;</span>
+            <span><strong>Anchor on a precise fact.</strong> Does one option match a well-known specific value?<br><em>Example: ("7485", "8848", "9337" → pick 8848, the exact height of Mount Everest.)</em></span>
           </li>
         </ul>
       </div>
@@ -688,15 +707,6 @@
   let score = 0;
   let results = [];
 
-  function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
   async function startQuiz() {
     if (!questions) {
       try {
@@ -707,7 +717,7 @@
         return;
       }
     }
-    shuffled = shuffle(questions);
+    shuffled = [...questions];
     current = 0;
     score = 0;
     results = [];
