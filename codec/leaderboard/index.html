@@ -22,9 +22,9 @@
       <span class="topbar-sep">|</span>
       <span class="topbar-subtitle">Contamination Detection via Context</span>
       <div class="topbar-links">
-        <a href="../">Project Page</a>
+        <a href="https://michalzawalski.github.io/codec/">Project Page</a>
         <a href="https://arxiv.org/abs/2510.27055" target="_blank">Paper</a>
-        <a href="https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator/examples/notebooks/contamination_detection_demo.ipynb" target="_blank">Code</a>
+        <a href="https://drive.google.com/file/d/15pyMI5o4bZ-mh-ZihVS5UhGZF0zEsC-E/view?usp=sharing" target="_blank">Code</a>
         <span id="last-updated">Loading&hellip;</span>
       </div>
     </div>
@@ -35,6 +35,9 @@
     <h1>CoDeC Contamination Leaderboard</h1>
     <p>Automated, model-agnostic data contamination detection via in-context learning.
       <a href="https://arxiv.org/abs/2510.27055" target="_blank" class="paper-link">Read the paper</a></p>
+    <p class="hero-note">A <b>guide to interpret</b> CoDeC scores can be found on the
+      <a href="https://michalzawalski.github.io/codec/">project page</a> and in the paper.</p>
+    <p class="hero-note">&#8595; <b>Lower</b> CoDeC Contamination score is better.</p>
   </header>
 
   <!-- ===== Filters ===== -->
@@ -43,21 +46,27 @@
       <div class="select-group">
         <div class="select-label-row">
           <label>Models</label>
+          <span class="selection-count" id="model-count"></span>
           <div class="select-buttons">
             <button onclick="selectAll('model-select')">Select all</button>
             <button onclick="selectNone('model-select')">Clear</button>
           </div>
         </div>
+        <input type="text" class="filter-search" id="model-search" placeholder="Search models…" oninput="filterPanel('model')">
+        <div id="model-presets" class="preset-row"></div>
         <div id="model-select" class="checkbox-panel"></div>
       </div>
       <div class="select-group">
         <div class="select-label-row">
           <label>Benchmarks</label>
+          <span class="selection-count" id="benchmark-count"></span>
           <div class="select-buttons">
             <button onclick="selectAll('benchmark-select')">Select all</button>
             <button onclick="selectNone('benchmark-select')">Clear</button>
           </div>
         </div>
+        <input type="text" class="filter-search" id="benchmark-search" placeholder="Search benchmarks…" oninput="filterPanel('benchmark')">
+        <div id="benchmark-presets" class="preset-row"></div>
         <div id="benchmark-select" class="checkbox-panel"></div>
       </div>
     </div>
@@ -86,9 +95,9 @@
 
   <footer>
     <span>CoDeC &mdash; Contamination Detection via Context &mdash;
-      <a href="../" style="color:var(--text-muted)">Project Page</a> &middot;
+      <a href="https://michalzawalski.github.io/codec/" style="color:var(--text-muted)">Project Page</a> &middot;
       <a href="https://arxiv.org/abs/2510.27055" target="_blank" style="color:var(--text-muted)">Paper</a> &middot;
-      <a href="https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator/examples/notebooks/contamination_detection_demo.ipynb" target="_blank" style="color:var(--text-muted)">Code</a></span>
+      <a href="https://drive.google.com/file/d/15pyMI5o4bZ-mh-ZihVS5UhGZF0zEsC-E/view?usp=sharing" target="_blank" style="color:var(--text-muted)">Code</a></span>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>

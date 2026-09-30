@@ -113,105 +113,291 @@ body {
 .paper-link:hover {
   text-decoration: underline;
 }
+/* Second hero line — same style as the tagline above it. */
+#hero p.hero-note {
+  margin-top: 4px;
+}
+.hero-note a {
+  color: var(--nv-green-dim);
+  font-weight: 500;
+  text-decoration: none;
+}
+.hero-note a:hover {
+  text-decoration: underline;
+}
 
 /* ===== Controls ===== */
 #controls {
-  background: var(--bg-white);
+  background: var(--bg-base);
   border-bottom: 1px solid var(--border);
-  padding: 20px 0;
+  padding: 24px 0;
 }
 .controls-inner {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 32px;
   display: flex;
-  gap: 32px;
+  gap: 24px;
   flex-wrap: wrap;
+  align-items: stretch;
 }
+
+/* Card container — each panel is a white card on the light-grey controls bg.
+   min/max-height + align-items:stretch on the parent make both cards the same
+   height. The .checkbox-panel below is a flex child with min-height:0 and no
+   max-height, so it fills whatever vertical space is available inside the card
+   — meaning the model panel's tree stretches to match the benchmark panel's
+   height even when it has no preset chips. */
 .select-group {
   flex: 1;
-  min-width: 240px;
+  min-width: 280px;
+  min-height: 250px;
+  max-height: 360px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
-.select-group .checkbox-panel {
-  flex: 1;
-}
+
+/* Section header row: title, count pill, action buttons */
 .select-label-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
 }
-.select-group label {
+/* Section label ("Models" / "Benchmarks"). Scoped to the header row so it
+   doesn't leak into .filter-item, which is also a <label> element. */
+.select-label-row > label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  letter-spacing: -0.1px;
+}
+.selection-count {
+  font-size: 0.68rem;
   font-weight: 600;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  padding: 1px 8px;
+  background: var(--bg-surface);
+  border-radius: 999px;
+  margin-right: auto;
+}
+.selection-count:empty {
+  display: none;
 }
 .select-buttons {
   display: flex;
-  gap: 6px;
+  gap: 2px;
 }
 .select-buttons button {
   font-family: var(--font);
   font-size: 0.7rem;
   font-weight: 500;
-  padding: 3px 12px;
+  padding: 2px 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.select-buttons button:hover {
+  color: var(--nv-green-dim);
+  background: var(--nv-green-bg);
+}
+
+/* Search input above each panel — includes inline magnifying-glass icon */
+.filter-search {
+  width: 100%;
+  padding: 7px 12px 7px 32px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  background-color: var(--bg-white);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%239aa0a6'><path fill-rule='evenodd' d='M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z' clip-rule='evenodd'/></svg>");
+  background-repeat: no-repeat;
+  background-position: 10px 50%;
+  background-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.filter-search:hover {
+  border-color: #cfcfcf;
+}
+.filter-search:focus {
+  outline: none;
+  border-color: var(--nv-green);
+  box-shadow: 0 0 0 3px var(--nv-green-bg);
+}
+.filter-search::placeholder {
+  color: var(--text-muted);
+}
+
+/* Preset chips row */
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+.preset-row:empty {
+  display: none;
+}
+.preset-chip {
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
   background: var(--bg-white);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+  line-height: 1.2;
 }
-.select-buttons button:hover {
+.preset-chip:hover {
   border-color: var(--nv-green);
-  color: var(--nv-green);
+  color: var(--nv-green-dim);
   background: var(--nv-green-bg);
 }
-/* Checkbox panels */
-.checkbox-panel {
-  max-height: 300px;
-  overflow-y: auto;
+.preset-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--nv-green-bg);
+}
+.preset-chip.active {
+  border-color: var(--nv-green);
+  background: var(--nv-green);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(118, 185, 0, 0.35);
+}
+.preset-chip.active:hover {
+  background: var(--nv-green-dim);
+  color: #fff;
+}
+/* Variant group: rendered as a segmented control (single pill housing label + variants) */
+.preset-group {
+  display: inline-flex;
+  align-items: stretch;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 999px;
   background: var(--bg-white);
+  overflow: hidden;
+}
+.preset-group-label {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px 4px 12px;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+.preset-chip.preset-variant {
+  border: none;
+  border-radius: 0;
+  border-left: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  min-width: 40px;
+  text-align: center;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+.preset-chip.preset-variant:first-of-type {
+  border-left: none;
+}
+.preset-chip.preset-variant:hover {
+  background: var(--nv-green-bg);
+  color: var(--nv-green-dim);
+}
+.preset-chip.preset-variant.active {
+  background: var(--nv-green);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px var(--nv-green);
+}
+
+/* Search filter — hide items and empty groups */
+.filter-item.hidden-by-filter,
+.family-group.hidden-by-filter {
+  display: none;
+}
+
+/* Checkbox tree — sits inside the card, fills remaining vertical space, and
+   scrolls within itself. No max-height on desktop: the card's max-height
+   caps overall size, and `flex: 1 + min-height: 0` lets this panel absorb
+   whatever space is left (search + preset row take less on the model side). */
+.checkbox-panel {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: transparent;
   padding: 2px 0;
 }
-.family-group:not(:last-child) {
-  border-bottom: 1px solid var(--border-light);
+/* Slim custom scrollbar (overrides the global one for this panel only) */
+.checkbox-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.checkbox-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+.checkbox-panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.checkbox-panel::-webkit-scrollbar-thumb:hover {
+  background: #bbb;
+}
+
+.family-group {
+  padding: 1px 0;
 }
 .family-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 10px;
+  padding: 5px 8px;
   cursor: pointer;
   background: var(--bg-surface);
   user-select: none;
   transition: background 0.12s;
+  border-radius: var(--radius-sm);
 }
 .family-header:hover {
   background: var(--nv-green-bg);
 }
 .family-label {
-  font-weight: 600;
-  font-size: 0.75rem;
+  font-weight: 500;
+  font-size: 0.82rem;
   color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0;
   flex: 1;
 }
 .family-chevron {
   font-size: 0.55rem;
   color: var(--text-muted);
-  transition: transform 0.15s;
+  transition: transform 0.2s ease;
   line-height: 1;
 }
 .family-header.collapsed .family-chevron {
   transform: rotate(-90deg);
+}
+.family-body {
+  padding: 2px 0;
 }
 .family-body.collapsed {
   display: none;
@@ -219,17 +405,17 @@ body {
 .filter-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 10px 3px 28px;
-  font-size: 0.8rem;
+  gap: 8px;
+  padding: 3px 8px 3px 30px;
   font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--text-primary);
+  letter-spacing: 0;
   cursor: pointer;
-  transition: background 0.1s;
+  transition: background 0.1s ease;
   user-select: none;
-}
-#benchmark-select .filter-item {
-  padding-left: 10px;
+  border-radius: var(--radius-sm);
 }
 .filter-item:hover {
   background: var(--nv-green-bg);
@@ -239,6 +425,8 @@ body {
   accent-color: var(--nv-green);
   cursor: pointer;
   flex-shrink: 0;
+  width: 13px;
+  height: 13px;
 }
 
 /* ===== Table ===== */
@@ -298,6 +486,7 @@ body {
   text-transform: uppercase;
   font-size: 0.7rem;
   letter-spacing: 0.6px;
+  text-align: center;
 }
 #table-container td.model-cell {
   font-weight: 500;
@@ -341,6 +530,41 @@ body {
   font-weight: 600;
 }
 
+/* Published date column — sticky between Model and Avg */
+#table-container th.date-header,
+#table-container td.date-cell {
+  position: sticky;
+  z-index: 2;
+  white-space: nowrap;
+  background: var(--bg-white);
+  font-variant-numeric: tabular-nums;
+  width: 92px;
+  min-width: 92px;
+  max-width: 92px;
+}
+#table-container th.date-header {
+  z-index: 3;
+  background: var(--bg-surface);
+  font-weight: 600;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 6px 8px;
+}
+#table-container th.date-header:hover .header-sort,
+#table-container th.date-header .header-sort:has(.active) {
+  opacity: 1;
+}
+#table-container td.date-cell {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+#table-container td.date-cell.missing-date {
+  color: var(--text-muted);
+}
+
 /* Rotated benchmark headers */
 #table-container thead th.bench-header {
   height: 130px;
@@ -368,20 +592,18 @@ body {
   color: var(--nv-green-dim);
 }
 
-/* Sort arrows in model header */
+/* Sort arrows in Model / Published / Avg headers — below title, centered */
 .header-sort {
-  display: inline-flex !important;
-  flex-direction: row !important;
-  margin-left: 6px;
-  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
 }
 #table-container th.model-header:hover .header-sort,
 .header-sort:has(.active) {
   opacity: 1;
-}
-.header-sort {
-  opacity: 0;
-  transition: opacity 0.15s;
 }
 
 /* Row sort arrows (on model cells) */
@@ -482,16 +704,110 @@ body {
   border-radius: var(--radius);
   padding: 20px;
   width: 100%;
-  max-width: 960px;
   box-shadow: var(--shadow-sm);
 }
-.chart-card h3 {
-  font-size: 0.9rem;
-  font-weight: 600;
+.chart-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 12px;
-  color: var(--text-primary);
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border-light);
+}
+.chart-card h3 {
+  font-size: 1.65rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.chart-card canvas {
+  cursor: zoom-in;
+}
+.chart-expand {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.chart-expand:hover {
+  color: var(--nv-green-dim);
+  background: var(--nv-green-bg);
+  border-color: var(--border);
+}
+
+/* ===== Chart modal (click-to-enlarge) ===== */
+#chart-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(20, 20, 20, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3vh 3vw;
+  animation: modal-fade 0.15s ease;
+}
+.chart-modal-dialog {
+  background: var(--bg-white);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  width: 92vw;
+  height: 86vh;
+  max-width: 1800px;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 24px 20px;
+}
+.chart-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+.chart-modal-head h3 {
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.chart-modal-close {
+  font-family: var(--font);
+  font-size: 1.4rem;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.chart-modal-close:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+.chart-modal-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.chart-modal-body canvas {
+  cursor: default;
+}
+body.modal-open {
+  overflow: hidden;
+}
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ===== Model detail panel ===== */
@@ -544,8 +860,9 @@ body {
   gap: 16px;
 }
 #model-detail-charts .chart-card {
-  max-width: 440px;
-  flex: 1 1 380px;
+  flex: 0 0 calc(50% - 8px);
+  max-width: calc(50% - 8px);
+  min-width: 0;
 }
 
 /* ===== Footer ===== */
@@ -576,8 +893,8 @@ footer {
 
   /* Controls */
   .controls-inner { padding: 0 12px; gap: 16px; flex-direction: column; }
-  .select-group { min-width: 0; }
-  .checkbox-panel { max-height: 180px; }
+  .select-group { min-width: 0; min-height: 0; max-height: none; padding: 12px; }
+  .checkbox-panel { flex: 0 0 auto; max-height: 180px; }
 
   /* Table */
   #table-section { padding: 12px 8px; }
@@ -599,6 +916,9 @@ footer {
   #table-container td.score-cell { padding: 3px 2px; font-size: 0.68rem; }
   #table-container th.avg-header,
   #table-container td.avg-cell { font-size: 0.68rem; padding: 3px 4px; }
+  /* Hide Published column on mobile to preserve space for benchmarks */
+  #table-container th.date-header,
+  #table-container td.date-cell { display: none; }
 
   /* Sort arrows — always visible on mobile for discoverability */
   .row-sort-arrows, .col-sort-arrows, .header-sort { opacity: 0.5; }
@@ -607,11 +927,14 @@ footer {
   .detail-inner { padding: 16px 12px; }
   #model-detail-header h2 { font-size: 0.9rem; }
   #model-detail-charts .chart-card { flex: 1 1 100%; max-width: 100%; }
+  .chart-modal-dialog { width: 100%; height: 100%; padding: 12px; }
+  #chart-modal { padding: 8px; }
 
   /* Charts */
   #charts-section { padding: 0 12px 16px; }
   .chart-card { padding: 14px; }
-  .chart-card h3 { font-size: 0.82rem; }
+  .chart-card h3 { font-size: 1.2rem; }
+  .chart-modal-head h3 { font-size: 1.6rem; }
 
   /* Footer */
   footer { padding: 14px 12px; font-size: 0.68rem; }
