@@ -865,11 +865,11 @@ function buildChartConfig(entries, highlightModel,
         legend: { display: false },
         tooltip: {
           callbacks: {
-            title: (items) => entries[items[0].dataIndex].model,
+            title: (items) => (items.length ? entries[items[0].dataIndex].model : ""),
             label: (item) => `${item.raw.toFixed(1)}%`,
           },
         },
-        annotation: { annotations: thresholdLines(horizontal, phone && !large ? 9 : (large ? 12 : 10)) },
+        annotation: { annotations: thresholdLines(horizontal, horizontal || (phone && !large) ? 10 : (large ? 12 : 10)) },
       },
       scales: horizontal ? {
         x: {
@@ -912,12 +912,12 @@ function buildChartConfig(entries, highlightModel,
         },
       },
       onClick: (evt, elements) => {
-        const url = elements.length > 0 ? entries[elements[0].index].run_url : null;
+        const url = elements.length > 0 ? entries[elements[0].index]?.run_url : null;
         if (url) window.open(url, "_blank");
         else if (onEnlarge) onEnlarge();
       },
       onHover: (evt, elements, chart) => {
-        const onLink = elements.length > 0 && entries[elements[0].index].run_url;
+        const onLink = elements.length > 0 && entries[elements[0].index]?.run_url;
         chart.canvas.style.cursor = onLink ? "pointer" : (onEnlarge ? "zoom-in" : "default");
       },
     },
@@ -925,25 +925,26 @@ function buildChartConfig(entries, highlightModel,
 }
 
 // Dashed "high" / "low" contamination reference lines on the score axis.
+// The horizontal (phone) view is the vertical chart rotated 90° clockwise, so
+// the labels are rotated the same way: in the vertical chart they sit at the
+// right end of each line, just above it (high-score side); here they sit at
+// the bottom end of each line, just to its right, reading top-to-bottom.
 function thresholdLines(horizontal, fontSize) {
   const line = (value, text, color, labelColor) => ({
     type: "line",
     ...(horizontal ? { xMin: value, xMax: value } : { yMin: value, yMax: value }),
     borderColor: color, borderWidth: 1.5, borderDash: [6, 4],
     label: {
-      // In the horizontal (phone) view a label would cover the top bars; the
-      // red/green dashed lines are self-explanatory there.
-      display: !horizontal, content: text, position: "end",
-      color: labelColor, font: { size: fontSize },
-      backgroundColor: horizontal ? "rgba(255,255,255,0.85)" : "transparent",
-      ...(horizontal ? {} : { yAdjust: -12 }),
+      display: true, content: text, color: labelColor, font: { size: fontSize },
+      backgroundColor: "transparent",
+      ...(horizontal
+        ? { position: "start", rotation: 90, xAdjust: 12 }   // bottom end, right of line
+        : { position: "end", yAdjust: -12 }),                // right end, above line
     },
   });
   return {
-    highLine: line(80, horizontal ? "High" : "High contamination",
-                   "rgba(239,68,68,0.5)", "rgba(239,68,68,0.8)"),
-    lowLine: line(40, horizontal ? "Low" : "Low contamination",
-                  "rgba(118,185,0,0.4)", "rgba(90,143,0,0.8)"),
+    highLine: line(80, "High contamination", "rgba(239,68,68,0.5)", "rgba(239,68,68,0.8)"),
+    lowLine: line(40, "Low contamination", "rgba(118,185,0,0.4)", "rgba(90,143,0,0.8)"),
   };
 }
 
