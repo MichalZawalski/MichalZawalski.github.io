@@ -759,7 +759,9 @@ function sortByRow(model, asc) {
   render();
 }
 
-function selectBenchmark(bench) {
+let activeBenchmarkChart = null;  // benchmark shown in #charts-section, if any
+
+function selectBenchmark(bench, scroll = true) {
   // Close model detail (deselect row) and show benchmark chart
   closeModelDetail();
   destroyCharts();
@@ -767,9 +769,12 @@ function selectBenchmark(bench) {
   section.innerHTML = "";
   const models = getSelected("model-select");
   section.appendChild(createBarChartCard(bench, models));
-  requestAnimationFrame(() => {
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  activeBenchmarkChart = bench;
+  if (scroll) {
+    requestAnimationFrame(() => {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -796,9 +801,22 @@ function chartEntries(benchmark, models) {
   return entries;
 }
 
+// Phones in either orientation (landscape phones are wide but short). Must
+// match the chart media query in style.css.
+const PHONE_QUERY = window.matchMedia("(max-width: 768px), (max-height: 500px)");
+const isPhone = () => PHONE_QUERY.matches;
+
 // Builds a Chart.js config for one benchmark. `onEnlarge` is called when the
 // user clicks the chart outside a bar that has a run link.
-function buildChartConfig(entries, highlightModel, { large = false, aspectRatio = 2.4, onEnlarge = null } = {}) {
+//
+// Phone layouts:
+//   - small cards hide model names (they can't fit) and use small fonts;
+//     tapping opens the enlarged view.
+//   - the enlarged view is a horizontal bar chart (`horizontal: true`): one
+//     row per model, names readable on the left, scrolling vertically.
+function buildChartConfig(entries, highlightModel,
+                          { large = false, aspectRatio = 2.4, onEnlarge = null, horizontal = false } = {}) {
+  const phone = isPhone();
   const NV_GREEN = "#76b900";
   const shortLabels = entries.map(e => e.model.substring(e.model.indexOf("/") + 1));
   const scores = entries.map(e => e.score * 100);
@@ -810,8 +828,9 @@ function buildChartConfig(entries, highlightModel, { large = false, aspectRatio 
   });
   const borderColors = entries.map(e =>
     (highlightModel && e.model === highlightModel) ? "#333" : "transparent");
+  // On phones bars are only a few px wide, so an outline would hide the green.
   const borderWidths = entries.map(e =>
-    (highlightModel && e.model === highlightModel) ? 2 : 0);
+    (highlightModel && e.model === highlightModel && !(phone && !large)) ? 2 : 0);
 
   // Tick label size scales with the space available per bar.
   // Model-detail cards (highlightModel set, not enlarged) are half width, so
@@ -839,8 +858,9 @@ function buildChartConfig(entries, highlightModel, { large = false, aspectRatio 
     },
     options: {
       responsive: true,
+      indexAxis: horizontal ? "y" : "x",
       maintainAspectRatio: !large,
-      aspectRatio,
+      aspectRatio: phone ? 1.6 : aspectRatio,
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -849,39 +869,39 @@ function buildChartConfig(entries, highlightModel, { large = false, aspectRatio 
             label: (item) => `${item.raw.toFixed(1)}%`,
           },
         },
-        annotation: {
-          annotations: {
-            highLine: {
-              type: "line", yMin: 80, yMax: 80,
-              borderColor: "rgba(239,68,68,0.5)", borderWidth: 1.5, borderDash: [6, 4],
-              label: {
-                display: true, content: "High contamination", position: "end",
-                color: "rgba(239,68,68,0.7)", font: { size: large ? 12 : 10 },
-                backgroundColor: "transparent", yAdjust: -12,
-              },
-            },
-            lowLine: {
-              type: "line", yMin: 40, yMax: 40,
-              borderColor: "rgba(118,185,0,0.4)", borderWidth: 1.5, borderDash: [6, 4],
-              label: {
-                display: true, content: "Low contamination", position: "end",
-                color: "rgba(118,185,0,0.6)", font: { size: large ? 12 : 10 },
-                backgroundColor: "transparent", yAdjust: -12,
-              },
+        annotation: { annotations: thresholdLines(horizontal, phone && !large ? 9 : (large ? 12 : 10)) },
+      },
+      scales: horizontal ? {
+        x: {
+          min: 0, max: 100, position: "top",
+          title: { display: true, text: "CoDeC Contamination Score (%)", color: "#666", font: { size: 11 } },
+          grid: { color: "#eee" },
+          ticks: { color: "#666", font: { size: 10 } },
+        },
+        y: {
+          ticks: {
+            autoSkip: false, color: "#333", font: { size: 11 },
+            // Long names would be clipped at the left edge on narrow screens;
+            // shorten them (the tooltip still shows the full name).
+            callback: function (value) {
+              const name = this.getLabelForValue(value);
+              const maxChars = Math.max(14, Math.floor(this.chart.width * 0.45 / 6.3));
+              return name.length > maxChars ? name.slice(0, maxChars - 1) + "…" : name;
             },
           },
+          grid: { display: false },
         },
-      },
-      scales: {
+      } : {
         y: {
           min: 0, max: 100,
           title: { display: true, text: "CoDeC Contamination Score (%)", color: "#666",
-                   font: { size: large ? 13 : 12 } },
+                   font: { size: phone ? 9 : (large ? 13 : 12) } },
           grid: { color: "#eee" },
-          ticks: { color: "#666", font: { size: large ? 12 : 11 } },
+          ticks: { color: "#666", font: { size: phone ? 9 : (large ? 12 : 11) } },
         },
         x: {
           ticks: {
+            display: !(phone && !large),
             autoSkip: false,
             maxRotation: 60,
             minRotation: 30,
@@ -901,6 +921,29 @@ function buildChartConfig(entries, highlightModel, { large = false, aspectRatio 
         chart.canvas.style.cursor = onLink ? "pointer" : (onEnlarge ? "zoom-in" : "default");
       },
     },
+  };
+}
+
+// Dashed "high" / "low" contamination reference lines on the score axis.
+function thresholdLines(horizontal, fontSize) {
+  const line = (value, text, color, labelColor) => ({
+    type: "line",
+    ...(horizontal ? { xMin: value, xMax: value } : { yMin: value, yMax: value }),
+    borderColor: color, borderWidth: 1.5, borderDash: [6, 4],
+    label: {
+      // In the horizontal (phone) view a label would cover the top bars; the
+      // red/green dashed lines are self-explanatory there.
+      display: !horizontal, content: text, position: "end",
+      color: labelColor, font: { size: fontSize },
+      backgroundColor: horizontal ? "rgba(255,255,255,0.85)" : "transparent",
+      ...(horizontal ? {} : { yAdjust: -12 }),
+    },
+  });
+  return {
+    highLine: line(80, horizontal ? "High" : "High contamination",
+                   "rgba(239,68,68,0.5)", "rgba(239,68,68,0.8)"),
+    lowLine: line(40, horizontal ? "Low" : "Low contamination",
+                  "rgba(118,185,0,0.4)", "rgba(90,143,0,0.8)"),
   };
 }
 
@@ -928,6 +971,10 @@ function createBarChartCard(benchmark, models, highlightModel) {
   card.appendChild(head);
   const canvas = document.createElement("canvas");
   card.appendChild(canvas);
+  const hint = document.createElement("div");
+  hint.className = "chart-hint";
+  hint.textContent = "Tap the chart to see model names";
+  card.appendChild(hint);
 
   // Half-width cards in the model detail view get a taller aspect ratio so
   // rotated model names have room.
@@ -942,32 +989,53 @@ function createBarChartCard(benchmark, models, highlightModel) {
 // ---------------------------------------------------------------------------
 
 let modalChart = null;
+let modalArgs = null;  // remembered so the modal can be rebuilt on rotation
 
 function openChartModal(title, entries, highlightModel) {
   closeChartModal();
+  modalArgs = [title, entries, highlightModel];
+  const horizontal = isPhone();
   const overlay = document.createElement("div");
   overlay.id = "chart-modal";
   overlay.innerHTML =
     `<div class="chart-modal-dialog" role="dialog" aria-modal="true">` +
     `<div class="chart-modal-head"><h3></h3>` +
     `<button type="button" class="chart-modal-close" aria-label="Close">&times;</button></div>` +
-    `<div class="chart-modal-body"><canvas></canvas></div></div>`;
+    `<div class="chart-modal-body"><div class="chart-modal-canvas"><canvas></canvas></div></div></div>`;
   overlay.querySelector("h3").textContent = title;
+  if (horizontal) {
+    // One ~18px row per model plus room for the top axis; the body scrolls.
+    overlay.querySelector(".chart-modal-canvas").style.height = `${entries.length * 18 + 70}px`;
+    overlay.classList.add("horizontal");
+  }
   overlay.addEventListener("click", (e) => { if (e.target === overlay) closeChartModal(); });
   overlay.querySelector(".chart-modal-close").addEventListener("click", closeChartModal);
   document.body.appendChild(overlay);
   document.body.classList.add("modal-open");
   modalChart = new Chart(overlay.querySelector("canvas"),
-                         buildChartConfig(entries, highlightModel, { large: true }));
+                         buildChartConfig(entries, highlightModel, { large: true, horizontal }));
 }
 
 function closeChartModal() {
+  modalArgs = null;
   if (modalChart) { modalChart.destroy(); modalChart = null; }
   document.getElementById("chart-modal")?.remove();
   document.body.classList.remove("modal-open");
 }
 
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeChartModal(); });
+
+// Rebuild visible charts when switching between phone and desktop layouts
+// (e.g. rotating a phone, or resizing a desktop window across the breakpoint).
+PHONE_QUERY.addEventListener("change", () => {
+  if (activeModelDetail) {
+    destroyCharts();
+    showModelDetail(activeModelDetail, false);
+  } else if (activeBenchmarkChart) {
+    selectBenchmark(activeBenchmarkChart, false);
+  }
+  if (modalArgs) openChartModal(...modalArgs);
+});
 
 // ---------------------------------------------------------------------------
 // Model detail view
@@ -982,6 +1050,7 @@ function showModelDetail(model, scroll = true) {
   // Clear benchmark chart (deselect column)
   const chartsSection = document.getElementById("charts-section");
   chartsSection.innerHTML = "";
+  activeBenchmarkChart = null;
 
   activeModelDetail = model;
   const section = document.getElementById("model-detail");
